@@ -11,29 +11,73 @@
       flex-direction: column;
       height: 100vh;
       overflow: hidden;
+      margin: 0;
     }
 
-    #glitch-container .content {
+    /* Loading Screen */
+    #load {
+      position: absolute;
+      width: 600px;
+      height: 36px;
+      left: 50%;
+      top: 40%;
+      margin-left: -300px;
+      overflow: visible;
+      user-select: none;
+      cursor: default;
+    }
+
+    #load div {
+      position: absolute;
+      width: 20px;
+      height: 36px;
+      opacity: 0;
+      font-family: Helvetica, Arial, sans-serif;
+      animation: move 2s linear infinite;
+      transform: rotate(180deg);
+      color: #35C4F0;
+    }
+
+    #load div:nth-child(2) { animation-delay: 0.2s; }
+    #load div:nth-child(3) { animation-delay: 0.4s; }
+    #load div:nth-child(4) { animation-delay: 0.6s; }
+    #load div:nth-child(5) { animation-delay: 0.8s; }
+    #load div:nth-child(6) { animation-delay: 1s; }
+    #load div:nth-child(7) { animation-delay: 1.2s; }
+
+    @keyframes move {
+      0% { left: 0; opacity: 0; }
+      35% { left: 41%; transform: rotate(0deg); opacity: 1; }
+      65% { left: 59%; transform: rotate(0deg); opacity: 1; }
+      100% { left: 100%; transform: rotate(-180deg); opacity: 0; }
+    }
+
+    /* Main Content */
+    #glitch-container {
+      display: none;
+    }
+    
+    .content {
       font-family: monospace;
       margin: auto;
       color: white;
       padding: 10%;
     }
-
-    #glitch-container #title {
+    
+    #title {
       text-align: center;
       text-transform: uppercase;
       font-size: 4em;
       border-bottom: solid 1px white;
     }
-
-    #glitch-container #text {
+    
+    #text {
       text-align: left;
       font-size: 1.25em;
       text-transform: uppercase;
     }
-
-    #glitch-container #credits {
+    
+    #credits {
       text-align: center;
       font-size: 1em;
       color: #bbb;
@@ -41,110 +85,29 @@
   </style>
 </head>
 <body>
+  <div id="load">
+    <div>G</div>
+    <div>N</div>
+    <div>I</div>
+    <div>D</div>
+    <div>A</div>
+    <div>O</div>
+    <div>L</div>
+  </div>
+
   <div id="glitch-container">
     <div class="content" id="title">Ben Allison</div>
-    <div class="content" id="text">
-      University of Kentucky Freshman Computer Science major.
-    </div>
+    <div class="content" id="text">University of Kentucky Freshman Computer Science major.</div>
     <div class="content" id="credits">Fill in later</div>
   </div>
 
   <script>
-    const chars = "☺Σ×Π#-_¯—→↓↑←0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
-
-    var Glitch = function(selector, index, numberOfGlitchedLetter, timeGlitch, timePerLetter, timeBetweenGlitch){
-      this.selector = selector;
-      this.index = index;
-      this.numberOfGlitchedLetter = numberOfGlitchedLetter;
-      this.innerText;
-      this.charArray = [];
-      this.charIndex = [];
-      this.timeGlitch = timeGlitch;
-      this.timeBetweenGlitch = timeBetweenGlitch;
-      this.timePerLetter = timePerLetter;
-      this.maxCount = Math.floor(this.timeGlitch/this.timePerLetter);
-      this.count = 0;
-    }
-
-    Glitch.prototype.init = function(){
-      this.innerText = this.selector.innerText;
-      this.charArray = this.innerText.split("");
-      if(this.numberOfGlitchedLetter == undefined || this.numberOfGlitchedLetter > this.innerText.length){
-        this.numberOfGlitchedLetter = this.innerText.length;
-      }
-      this.defineCharIndexToRandomize();
-    }
-
-    Glitch.prototype.defineCharIndexToRandomize = function(){
-      this.charIndex = [];
-      for(let i=0; i<this.numberOfGlitchedLetter; i++){
-        let randCharIndex = Math.floor(Math.random() * this.charArray.length);
-        this.charIndex.push(randCharIndex);
-      }
-    }
-
-    Glitch.prototype.randomize = function(){
-      //copy the char array
-      let randomString = Array.from(this.charArray);
-
-      //randomize char
-      for(let i=0; i<this.numberOfGlitchedLetter; i++){
-        let randIndex = Math.floor(Math.random() * chars.length);
-        let randCharIndex = this.charIndex[i];
-        if(randomString[randCharIndex] !== ' '){
-          randomString[randCharIndex] = chars[randIndex];
-        }
-      }
-      this.selector.innerText = randomString.join("");
-    }
-
-    Glitch.prototype.update = function(interval){
-      if(this.count >= this.maxCount - 1){
-        this.selector.innerText = this.innerText;
-        this.defineCharIndexToRandomize();
-        let ctx = this;
-        let wait = setTimeout(function(){
-          ctx.count = 0;
-        }, this.timeBetweenGlitch);
-      }else{
-        this.randomize();
-        this.count ++;
-      }
-    }
-
-    Glitch.prototype.glitch = function(){
-      let ctx = this;
-      let interval= setInterval(function(){
-        ctx.update(this);
-      },this.timePerLetter);
-    }
-
-    var arrayElements;
-    var glitchArray = [];
-
-    function initAllGlitch(){
-      // Only select elements inside #glitch-container
-      arrayElements = document.querySelectorAll("#glitch-container .content");
-      for (let i = 0; i < arrayElements.length; i++) {
-        let selector = arrayElements[i];
-        let randLetterNumber = 2 + Math.floor(Math.random() * 8);
-        let randGlitchTime = 500 + Math.floor(Math.random() * 2500);
-        let randGlitchPauseTime = 500 + Math.floor(Math.random() * 2500);
-        let glitch = new Glitch(selector, i, randLetterNumber, 200, 65, randGlitchPauseTime);
-        glitch.init();
-        glitchArray.push(glitch);
-      }
-    }
-
-    function update(){
-      for (let i = 0; i < glitchArray.length; i++) {
-        let glitch = glitchArray[i];
-        glitch.glitch();
-      }
-    }
-
-    initAllGlitch();
-    update();
+    document.addEventListener("DOMContentLoaded", function() {
+      setTimeout(function() {
+        document.getElementById("load").style.display = "none";
+        document.getElementById("glitch-container").style.display = "block";
+      }, 2000); // Wait for 2 seconds before showing main content
+    });
   </script>
 </body>
 </html>
