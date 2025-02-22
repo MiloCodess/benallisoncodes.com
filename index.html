@@ -116,12 +116,19 @@
       elements.forEach(element => {
         let originalText = element.innerText;
         setInterval(() => {
-          let glitchedText = originalText.split("").map(char => Math.random() < 0.4 ? chars[Math.floor(Math.random() * chars.length)] : char).join("");
-          element.innerText = glitchedText;
-          setTimeout(() => {
-            element.innerText = originalText;
-          }, 200);
-        }, 3000);
+          let iterations = 6; // Number of times the text will change per glitch cycle
+          let interval = setInterval(() => {
+            let glitchedText = originalText.split(" ").map(char => 
+              Math.random() < 0.25 ? chars[Math.floor(Math.random() * chars.length)] : char
+            ).join(" ");
+            element.innerText = glitchedText;
+            iterations--;
+            if (iterations <= 0) {
+              clearInterval(interval);
+              element.innerText = originalText;
+            }
+          }, 100); // Each character change lasts 100ms
+        }, 5000); // 5 seconds between glitch cycles
       });
     }
   </script>
