@@ -106,29 +106,62 @@
       setTimeout(function() {
         document.getElementById("load").style.display = "none";
         document.getElementById("glitch-container").style.display = "block";
-        startGlitchEffect();
+        initAllGlitch();
       }, 2000);
     });
 
-    function startGlitchEffect() {
-      const chars = "☺Σ×Π#-_¯—→↓↑←0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
-      const elements = document.querySelectorAll("#glitch-container .content");
-      elements.forEach(element => {
-        let originalText = element.innerText;
-        setInterval(() => {
-          let iterations = 6; // Number of times the text will change per glitch cycle
-          let interval = setInterval(() => {
-            let glitchedText = originalText.split(" ").map(char => 
-              Math.random() < 0.25 ? chars[Math.floor(Math.random() * chars.length)] : char
-            ).join(" ");
-            element.innerText = glitchedText;
-            iterations--;
-            if (iterations <= 0) {
-              clearInterval(interval);
-              element.innerText = originalText;
-            }
-          }, 100); // Each character change lasts 100ms
-        }, 5000); // 5 seconds between glitch cycles
+    class Glitch {
+      constructor(selector, numberOfGlitchedLetter, timeGlitch, timePerLetter, timeBetweenGlitch) {
+        this.chars = "☺Σ×Π#-_¯—→↓↑←0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
+        this.selector = selector;
+        this.numberOfGlitchedLetter = numberOfGlitchedLetter;
+        this.innerText = selector.innerText;
+        this.charArray = this.innerText.split("");
+        this.charIndex = [];
+        this.timeGlitch = timeGlitch;
+        this.timeBetweenGlitch = timeBetweenGlitch;
+        this.timePerLetter = timePerLetter;
+        this.maxCount = Math.floor(this.timeGlitch / this.timePerLetter);
+        this.count = 0;
+        this.defineCharIndexToRandomize();
+      }
+
+      defineCharIndexToRandomize() {
+        this.charIndex = [];
+        for (let i = 0; i < this.numberOfGlitchedLetter; i++) {
+          let randCharIndex = Math.floor(Math.random() * this.charArray.length);
+          this.charIndex.push(randCharIndex);
+        }
+      }
+
+      randomize() {
+        let randomString = [...this.charArray];
+        this.charIndex.forEach(randCharIndex => {
+          if (randomString[randCharIndex] !== ' ') {
+            randomString[randCharIndex] = this.chars[Math.floor(Math.random() * this.chars.length)];
+          }
+        });
+        this.selector.innerText = randomString.join("");
+      }
+
+      glitch() {
+        const interval = setInterval(() => {
+          if (this.count >= this.maxCount) {
+            this.selector.innerText = this.innerText;
+            this.defineCharIndexToRandomize();
+            clearInterval(interval);
+            setTimeout(() => { this.count = 0; this.glitch(); }, this.timeBetweenGlitch);
+          } else {
+            this.randomize();
+            this.count++;
+          }
+        }, this.timePerLetter);
+      }
+    }
+
+    function initAllGlitch() {
+      document.querySelectorAll("#glitch-container .content").forEach(selector => {
+        new Glitch(selector, 5, 600, 65, 5000).glitch();
       });
     }
   </script>
