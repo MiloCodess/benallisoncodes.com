@@ -106,8 +106,25 @@
       setTimeout(function() {
         document.getElementById("load").style.display = "none";
         document.getElementById("glitch-container").style.display = "block";
-      }, 2000); // Wait for 2 seconds before showing main content
+        initGlitch();
+      }, 2000);
     });
+
+    function initGlitch() {
+      const chars = "☺Σ×Π#-_¯—→↓↑←0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
+      const elements = document.querySelectorAll("#glitch-container .content");
+      elements.forEach(element => {
+        let originalText = element.innerText;
+        let glitchInterval = setInterval(() => {
+          let glitchedText = originalText.split("").map(char => Math.random() < 0.2 ? chars[Math.floor(Math.random() * chars.length)] : char).join("");
+          element.innerText = glitchedText;
+        }, 100);
+        setTimeout(() => {
+          clearInterval(glitchInterval);
+          element.innerText = originalText;
+        }, 3000 + Math.random() * 2000);
+      });
+    }
   </script>
 </body>
 </html>
