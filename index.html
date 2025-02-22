@@ -116,7 +116,7 @@
       elements.forEach(element => {
         let originalText = element.innerText;
         setInterval(() => {
-          let glitchedText = originalText.split("").map(char => Math.random() < 0.15 ? chars[Math.floor(Math.random() * chars.length)] : char).join("");
+          let glitchedText = originalText.split("").map(char => Math.random() < 0.4 ? chars[Math.floor(Math.random() * chars.length)] : char).join("");
           element.innerText = glitchedText;
           setTimeout(() => {
             element.innerText = originalText;
