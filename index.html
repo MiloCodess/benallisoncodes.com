@@ -38,13 +38,6 @@
       color: #35C4F0;
     }
 
-    #load div:nth-child(2) { animation-delay: 0.2s; }
-    #load div:nth-child(3) { animation-delay: 0.4s; }
-    #load div:nth-child(4) { animation-delay: 0.6s; }
-    #load div:nth-child(5) { animation-delay: 0.8s; }
-    #load div:nth-child(6) { animation-delay: 1s; }
-    #load div:nth-child(7) { animation-delay: 1.2s; }
-
     @keyframes move {
       0% { left: 0; opacity: 0; }
       35% { left: 41%; transform: rotate(0deg); opacity: 1; }
@@ -62,29 +55,23 @@
       margin: auto;
       color: white;
       padding: 10%;
+      position: relative;
+      z-index: 2;
     }
-    
-    #title {
-      text-align: center;
-      text-transform: uppercase;
-      font-size: 4em;
-      border-bottom: solid 1px white;
-    }
-    
-    #text {
-      text-align: left;
-      font-size: 1.25em;
-      text-transform: uppercase;
-    }
-    
-    #credits {
-      text-align: center;
-      font-size: 1em;
-      color: #bbb;
+
+    /* Background Canvas */
+    canvas.background {
+      position: absolute;
+      height: 100vh;
+      width: 100vw;
+      top: 0;
+      left: 0;
+      z-index: 0;
     }
   </style>
 </head>
 <body>
+  <canvas class="background"></canvas>
   <div id="load">
     <div>G</div>
     <div>N</div>
@@ -110,60 +97,28 @@
       }, 2000);
     });
 
-    class Glitch {
-      constructor(selector, numberOfGlitchedLetter, timeGlitch, timePerLetter, timeBetweenGlitch) {
-        this.chars = "☺Σ×Π#-_¯—→↓↑←0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
-        this.selector = selector;
-        this.numberOfGlitchedLetter = numberOfGlitchedLetter;
-        this.innerText = selector.innerText;
-        this.charArray = this.innerText.split("");
-        this.charIndex = [];
-        this.timeGlitch = timeGlitch;
-        this.timeBetweenGlitch = timeBetweenGlitch;
-        this.timePerLetter = timePerLetter;
-        this.maxCount = Math.floor(this.timeGlitch / this.timePerLetter);
-        this.count = 0;
-        this.defineCharIndexToRandomize();
-      }
-
-      defineCharIndexToRandomize() {
-        this.charIndex = [];
-        for (let i = 0; i < this.numberOfGlitchedLetter; i++) {
-          let randCharIndex = Math.floor(Math.random() * this.charArray.length);
-          this.charIndex.push(randCharIndex);
-        }
-      }
-
-      randomize() {
-        let randomString = [...this.charArray];
-        this.charIndex.forEach(randCharIndex => {
-          if (randomString[randCharIndex] !== ' ') {
-            randomString[randCharIndex] = this.chars[Math.floor(Math.random() * this.chars.length)];
+    function initParticles() {
+      Particles.init({
+        selector: ".background",
+        color: ["#03dac6", "#ff0266", "#000000"],
+        connectParticles: true,
+        responsive: [
+          {
+            breakpoint: 768,
+            options: {
+              color: ["#faebd7", "#03dac6", "#ff0266"],
+              maxParticles: 43,
+              connectParticles: false
+            }
           }
-        });
-        this.selector.innerText = randomString.join("");
-      }
-
-      glitch() {
-        const interval = setInterval(() => {
-          if (this.count >= this.maxCount) {
-            this.selector.innerText = this.innerText;
-            this.defineCharIndexToRandomize();
-            clearInterval(interval);
-            setTimeout(() => { this.count = 0; this.glitch(); }, this.timeBetweenGlitch);
-          } else {
-            this.randomize();
-            this.count++;
-          }
-        }, this.timePerLetter);
-      }
-    }
-
-    function initAllGlitch() {
-      document.querySelectorAll("#glitch-container .content").forEach(selector => {
-        new Glitch(selector, 5, 600, 65, 5000).glitch();
+        ]
       });
     }
+
+    window.onload = function () {
+      initParticles();
+    };
   </script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </body>
 </html>
