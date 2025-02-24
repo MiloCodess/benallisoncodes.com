@@ -21,10 +21,13 @@
       position: absolute;
       width: 600px;
       height: 36px;
-      top: 40%;
+      top: 35%;
+      left: 50%;
+      transform: translateX(-50%);
       overflow: visible;
       user-select: none;
       cursor: default;
+      z-index: 10;
     }
 
     #load div {
@@ -82,14 +85,16 @@
       flex-direction: column;
       align-items: center;
       margin-top: 20px;
+      z-index: 5;
     }
 
     .scene_nav_list {
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
       padding: 0;
       list-style: none;
+      max-width: 300px;
     }
 
     .scene_nav_item {
