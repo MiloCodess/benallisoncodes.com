@@ -9,8 +9,6 @@
       background: #0a0a0a;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
       height: 100vh;
       overflow: hidden;
       margin: 0;
@@ -21,13 +19,12 @@
       position: absolute;
       width: 600px;
       height: 36px;
-      top: 30%;
       left: 50%;
-      transform: translateX(-50%);
+      top: 40%;
+      margin-left: -300px;
       overflow: visible;
       user-select: none;
       cursor: default;
-      z-index: 10;
     }
 
     #load div {
@@ -41,6 +38,13 @@
       color: #35C4F0;
     }
 
+    #load div:nth-child(2) { animation-delay: 0.2s; }
+    #load div:nth-child(3) { animation-delay: 0.4s; }
+    #load div:nth-child(4) { animation-delay: 0.6s; }
+    #load div:nth-child(5) { animation-delay: 0.8s; }
+    #load div:nth-child(6) { animation-delay: 1s; }
+    #load div:nth-child(7) { animation-delay: 1.2s; }
+
     @keyframes move {
       0% { left: 0; opacity: 0; }
       35% { left: 41%; transform: rotate(0deg); opacity: 1; }
@@ -51,69 +55,32 @@
     /* Main Content */
     #glitch-container {
       display: none;
-      margin-top: 50px;
     }
     
     .content {
       font-family: monospace;
+      margin: auto;
       color: white;
-      text-align: center;
-      padding: 10px;
+      padding: 10%;
     }
     
     #title {
+      text-align: center;
       text-transform: uppercase;
-      font-size: 3em;
+      font-size: 4em;
       border-bottom: solid 1px white;
     }
     
     #text {
+      text-align: left;
       font-size: 1.25em;
       text-transform: uppercase;
     }
     
     #credits {
+      text-align: center;
       font-size: 1em;
       color: #bbb;
-    }
-
-    /* Scene Navigation */
-    .scene_nav {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 30px;
-      z-index: 5;
-    }
-
-    .scene_nav_list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      justify-content: center;
-      padding: 0;
-      list-style: none;
-      max-width: 300px;
-    }
-
-    .scene_nav_item {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .scene_nav_button {
-      width: 50px;
-      height: 50px;
-      background: rgba(10, 120, 150, 1);
-      border: none;
-      cursor: pointer;
-      transition: 300ms;
-    }
-
-    .scene_nav_button.o-active, .scene_nav_button:hover {
-      background: rgba(100, 250, 250, 1);
-      width: 120px;
     }
   </style>
 </head>
@@ -132,16 +99,6 @@
     <div class="content" id="title">Ben Allison</div>
     <div class="content" id="text">University of Kentucky Freshman Computer Science major.</div>
     <div class="content" id="credits">Fill in later</div>
-  </div>
-
-  <div id="js-ui" class="scene_nav">
-    <nav>
-      <ol class="scene_nav_list">
-        <li class="scene_nav_item" v-for="(params, index) in maxScene" :key="index">
-          <button class="scene_nav_button" @click="scene = index" :class="{ 'o-active': scene === index }">{{ index + 1 }}</button>
-        </li>
-      </ol>
-    </nav>
   </div>
 
   <script>
@@ -168,25 +125,45 @@
         this.count = 0;
         this.defineCharIndexToRandomize();
       }
-      glitch() {}
+
+      defineCharIndexToRandomize() {
+        this.charIndex = [];
+        for (let i = 0; i < this.numberOfGlitchedLetter; i++) {
+          let randCharIndex = Math.floor(Math.random() * this.charArray.length);
+          this.charIndex.push(randCharIndex);
+        }
+      }
+
+      randomize() {
+        let randomString = [...this.charArray];
+        this.charIndex.forEach(randCharIndex => {
+          if (randomString[randCharIndex] !== ' ') {
+            randomString[randCharIndex] = this.chars[Math.floor(Math.random() * this.chars.length)];
+          }
+        });
+        this.selector.innerText = randomString.join("");
+      }
+
+      glitch() {
+        const interval = setInterval(() => {
+          if (this.count >= this.maxCount) {
+            this.selector.innerText = this.innerText;
+            this.defineCharIndexToRandomize();
+            clearInterval(interval);
+            setTimeout(() => { this.count = 0; this.glitch(); }, this.timeBetweenGlitch);
+          } else {
+            this.randomize();
+            this.count++;
+          }
+        }, this.timePerLetter);
+      }
     }
 
-    function initAllGlitch() {}
-
-    new Vue({
-      el: '#js-ui',
-      data() {
-        return {
-          scene: 0,
-          maxScene: 9
-        };
-      },
-      mounted() {
-        setTimeout(() => {
-          this.scene = this.maxScene - 3;
-        }, 1000);
-      }
-    });
+    function initAllGlitch() {
+      document.querySelectorAll("#glitch-container .content").forEach(selector => {
+        new Glitch(selector, 5, 600, 65, 5000).glitch();
+      });
+    }
   </script>
 </body>
 </html>
