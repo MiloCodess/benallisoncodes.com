@@ -9,9 +9,10 @@
       background: #0a0a0a;
       display: flex;
       flex-direction: column;
-      height: 100vh;
-      overflow: hidden;
       margin: 0;
+      overflow-x: hidden;
+      color: white;
+      font-family: monospace;
     }
 
     /* Loading Screen */
@@ -25,6 +26,7 @@
       overflow: visible;
       user-select: none;
       cursor: default;
+      z-index: 1000;
     }
 
     #load div {
@@ -55,32 +57,177 @@
     /* Main Content */
     #glitch-container {
       display: none;
+      height: 100vh;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 10%;
+      margin-bottom: 5vh;
     }
     
     .content {
       font-family: monospace;
-      margin: auto;
       color: white;
-      padding: 10%;
+      width: 100%;
+      text-align: center;
     }
     
     #title {
-      text-align: center;
       text-transform: uppercase;
       font-size: 4em;
       border-bottom: solid 1px white;
+      margin-bottom: 20px;
     }
     
     #text {
-      text-align: left;
+      text-align: center;
       font-size: 1.25em;
       text-transform: uppercase;
+      margin-bottom: 20px;
     }
     
     #credits {
-      text-align: center;
       font-size: 1em;
       color: #bbb;
+    }
+
+    /* Gallery Section Styles */
+    /* Basic styles to prevent conflicts */
+    .gallery-section {
+      width: 100%;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+      display: none;
+    }
+
+    .content-wrap {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fluid {
+      --font-level: 8;
+      line-height: 0.6;
+      font-size: clamp(2rem, 10vw, 8rem);
+    }
+
+    /* Gallery Grid Styles */
+    .gallery-section header {
+      min-height: 50vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .gallery-content {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      place-items: center;
+      align-content: center;
+      overflow: hidden;
+    }
+
+    .gallery-grid {
+      width: 90%;
+      max-width: 1600px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(3, auto);
+      gap: clamp(10px, 5vw, 30px);
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .layer {
+      display: grid;
+      grid-column: 1 / -1;
+      grid-row: 1 / -1;
+      grid-template-columns: subgrid;
+      grid-template-rows: subgrid;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: 1rem;
+    }
+
+    /* Layer 1 positioning */
+    .layer:nth-of-type(1) div:nth-of-type(odd) {
+      grid-column: 1;
+    }
+    .layer:nth-of-type(1) div:nth-of-type(even) {
+      grid-column: 5;
+    }
+
+    /* Layer 2 positioning */
+    .layer:nth-of-type(2) div:nth-of-type(odd) {
+      grid-column: 2;
+    }
+    .layer:nth-of-type(2) div:nth-of-type(even) {
+      grid-column: 4;
+    }
+
+    /* Layer 3 positioning */
+    .layer:nth-of-type(3) div {
+      grid-column: 3;
+    }
+
+    /* Featured image */
+    .scaler {
+      grid-area: 2 / 3;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .scaler img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: auto;
+      border-radius: 1rem;
+      transition: width 0.8s ease, height 0.8s ease;
+    }
+
+    .gallery-section .end-section {
+      min-height: 50vh;
+      display: grid;
+      place-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      .layer:nth-of-type(1) {
+        display: none;
+      }
+      
+      .layer:nth-of-type(2) div:nth-of-type(odd) {
+        grid-column: 1;
+      }
+      
+      .layer:nth-of-type(2) div:nth-of-type(even) {
+        grid-column: 3;
+      }
+      
+      .scaler {
+        grid-area: 2 / 2;
+      }
     }
   </style>
 </head>
@@ -98,72 +245,215 @@
   <div id="glitch-container">
     <div class="content" id="title">Ben Allison</div>
     <div class="content" id="text">University of Kentucky Freshman Computer Science major.</div>
-    <div class="content" id="credits">Fill in later</div>
+    <div class="content" id="credits">Cybersecurity Portfolio</div>
+  </div>
+
+  <!-- Gallery Section - Initially Hidden -->
+  <div class="gallery-section" id="gallery-section">
+    <header>
+      <h1 class="fluid">projects.</h1>
+    </header>
+    
+    <section>
+      <div class="gallery-content">
+        <div class="gallery-grid">
+          <!-- Layer 1 -->
+          <div class="layer" id="layer-1">
+            <div>
+              <img src="/api/placeholder/400/500" alt="Project image" />
+            </div>
+            <div>
+              <img src="/api/placeholder/400/500" alt="Project image" />
+            </div>
+            <div>
+              <img src="/api/placeholder/400/500" alt="Project image" />
+            </div>
+            <div>
+              <img src="/api/placeholder/400/500" alt="Project image" />
+            </div>
+          </div>
+          
+          <!-- Layer 2 -->
+          <div class="layer" id="layer-2">
+            <div>
+              <img src="/api/placeholder/400/500" alt="Project image" />
+            </div>
+            <div>
+              <img src="/api/placeholder/400/500" alt="Project image" />
+            </div>
+            <div>
+              <img src="/api/placeholder/400/500" alt="Project image" />
+            </div>
+            <div>
+              <img src="/api/placeholder/400/500" alt="Project image" />
+            </div>
+          </div>
+          
+          <!-- Layer 3 -->
+          <div class="layer" id="layer-3">
+            <div>
+              <img src="/api/placeholder/400/500" alt="Project image" />
+            </div>
+            <div>
+              <img src="/api/placeholder/400/500" alt="Project image" />
+            </div>
+          </div>
+          
+          <!-- Featured Image -->
+          <div class="scaler" id="featured-image">
+            <img src="/api/placeholder/800/1000" alt="Featured project" />
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="end-section">
+      <h2 class="fluid">more soon.</h2>
+    </section>
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      setTimeout(function() {
-        document.getElementById("load").style.display = "none";
-        document.getElementById("glitch-container").style.display = "block";
-        initAllGlitch();
-      }, 2000);
-    });
+    // Use an IIFE to avoid global variables
+    (function() {
+      // Original glitch functionality
+      const glitchSystem = {
+        // Initialize glitch system
+        init: function() {
+          document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+              document.getElementById("load").style.display = "none";
+              document.getElementById("glitch-container").style.display = "flex";
+              this.initGlitchEffects();
+              
+              // After a delay, initialize and show the gallery
+              setTimeout(() => {
+                gallerySystem.init();
+              }, 1000);
+            }, 2000);
+          });
+        },
+        
+        // Initialize glitch effects
+        initGlitchEffects: function() {
+          document.querySelectorAll("#glitch-container .content").forEach(selector => {
+            new Glitch(selector, 5, 600, 65, 5000).glitch();
+          });
+        }
+      };
+      
+      // Gallery system
+      const gallerySystem = {
+        // Initialize gallery
+        init: function() {
+          const gallerySection = document.getElementById("gallery-section");
+          gallerySection.style.display = "block";
+          
+          // Set up scroll detection 
+          this.setupScrollEffects();
+        },
+        
+        // Setup scroll effects
+        setupScrollEffects: function() {
+          const layers = document.querySelectorAll(".layer");
+          const scaler = document.querySelector(".scaler img");
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                // Animate layers when they come into view
+                layers.forEach((layer, index) => {
+                  setTimeout(() => {
+                    layer.style.opacity = "1";
+                    layer.style.transform = "scale(1)";
+                  }, index * 200);
+                });
+                
+                // Start featured image animation
+                scaler.style.width = "100%";
+              }
+            });
+          }, { threshold: 0.2 });
+          
+          // Observe the gallery section
+          observer.observe(document.querySelector(".gallery-content"));
+          
+          // Basic scroll effect
+          window.addEventListener("scroll", () => {
+            const scrollPosition = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const galleryContent = document.querySelector(".gallery-content");
+            
+            if (galleryContent) {
+              const galleryTop = galleryContent.getBoundingClientRect().top + scrollPosition;
+              const scrollPercentage = Math.min(
+                Math.max((scrollPosition - galleryTop + windowHeight) / windowHeight, 0),
+                1
+              );
+              
+              // Add more detailed scroll animations here if needed
+              if (scrollPercentage > 0.1) {
+                layers.forEach((layer, index) => {
+                  layer.style.opacity = "1";
+                  layer.style.transform = "scale(1)";
+                });
+              }
+            }
+          });
+        }
+      };
+      
+      // Glitch class
+      class Glitch {
+        constructor(selector, numberOfGlitchedLetter, timeGlitch, timePerLetter, timeBetweenGlitch) {
+          this.chars = "☺Σ×Π#-_¯—→↓↑←0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
+          this.selector = selector;
+          this.numberOfGlitchedLetter = numberOfGlitchedLetter;
+          this.innerText = selector.innerText;
+          this.charArray = this.innerText.split("");
+          this.charIndex = [];
+          this.timeGlitch = timeGlitch;
+          this.timeBetweenGlitch = timeBetweenGlitch;
+          this.timePerLetter = timePerLetter;
+          this.maxCount = Math.floor(this.timeGlitch / this.timePerLetter);
+          this.count = 0;
+          this.defineCharIndexToRandomize();
+        }
 
-    class Glitch {
-      constructor(selector, numberOfGlitchedLetter, timeGlitch, timePerLetter, timeBetweenGlitch) {
-        this.chars = "☺Σ×Π#-_¯—→↓↑←0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
-        this.selector = selector;
-        this.numberOfGlitchedLetter = numberOfGlitchedLetter;
-        this.innerText = selector.innerText;
-        this.charArray = this.innerText.split("");
-        this.charIndex = [];
-        this.timeGlitch = timeGlitch;
-        this.timeBetweenGlitch = timeBetweenGlitch;
-        this.timePerLetter = timePerLetter;
-        this.maxCount = Math.floor(this.timeGlitch / this.timePerLetter);
-        this.count = 0;
-        this.defineCharIndexToRandomize();
-      }
+        defineCharIndexToRandomize() {
+          this.charIndex = [];
+          for (let i = 0; i < this.numberOfGlitchedLetter; i++) {
+            let randCharIndex = Math.floor(Math.random() * this.charArray.length);
+            this.charIndex.push(randCharIndex);
+          }
+        }
 
-      defineCharIndexToRandomize() {
-        this.charIndex = [];
-        for (let i = 0; i < this.numberOfGlitchedLetter; i++) {
-          let randCharIndex = Math.floor(Math.random() * this.charArray.length);
-          this.charIndex.push(randCharIndex);
+        randomize() {
+          let randomString = [...this.charArray];
+          this.charIndex.forEach(randCharIndex => {
+            if (randomString[randCharIndex] !== ' ') {
+              randomString[randCharIndex] = this.chars[Math.floor(Math.random() * this.chars.length)];
+            }
+          });
+          this.selector.innerText = randomString.join("");
+        }
+
+        glitch() {
+          const interval = setInterval(() => {
+            if (this.count >= this.maxCount) {
+              this.selector.innerText = this.innerText;
+              this.defineCharIndexToRandomize();
+              clearInterval(interval);
+              setTimeout(() => { this.count = 0; this.glitch(); }, this.timeBetweenGlitch);
+            } else {
+              this.randomize();
+              this.count++;
+            }
+          }, this.timePerLetter);
         }
       }
-
-      randomize() {
-        let randomString = [...this.charArray];
-        this.charIndex.forEach(randCharIndex => {
-          if (randomString[randCharIndex] !== ' ') {
-            randomString[randCharIndex] = this.chars[Math.floor(Math.random() * this.chars.length)];
-          }
-        });
-        this.selector.innerText = randomString.join("");
-      }
-
-      glitch() {
-        const interval = setInterval(() => {
-          if (this.count >= this.maxCount) {
-            this.selector.innerText = this.innerText;
-            this.defineCharIndexToRandomize();
-            clearInterval(interval);
-            setTimeout(() => { this.count = 0; this.glitch(); }, this.timeBetweenGlitch);
-          } else {
-            this.randomize();
-            this.count++;
-          }
-        }, this.timePerLetter);
-      }
-    }
-
-    function initAllGlitch() {
-      document.querySelectorAll("#glitch-container .content").forEach(selector => {
-        new Glitch(selector, 5, 600, 65, 5000).glitch();
-      });
-    }
+      
+      // Initialize the site
+      glitchSystem.init();
+    })();
   </script>
 </body>
 </html>
