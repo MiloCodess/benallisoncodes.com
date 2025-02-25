@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ben Allison | Cybersecurity Portfolio</title>
   <style>
+    /* Original styles */
     body {
       background: #0a0a0a;
       display: flex;
       flex-direction: column;
       margin: 0;
-      overflow-x: hidden;
       color: white;
-      font-family: monospace;
+      font-family: Helvetica, Arial, sans-serif;
     }
 
     /* Loading Screen */
@@ -26,7 +26,7 @@
       overflow: visible;
       user-select: none;
       cursor: default;
-      z-index: 1000;
+      z-index: 100;
     }
 
     #load div {
@@ -54,137 +54,299 @@
       100% { left: 100%; transform: rotate(-180deg); opacity: 0; }
     }
 
-    /* Main Content */
+    /* Original Glitch Container */
     #glitch-container {
       display: none;
-      height: 100vh;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 0 10%;
-      margin-bottom: 5vh;
     }
     
-    .content {
+    .content-original {
       font-family: monospace;
+      margin: auto;
       color: white;
-      width: 100%;
-      text-align: center;
+      padding: 10%;
     }
     
     #title {
+      text-align: center;
       text-transform: uppercase;
       font-size: 4em;
       border-bottom: solid 1px white;
-      margin-bottom: 20px;
     }
     
     #text {
-      text-align: center;
+      text-align: left;
       font-size: 1.25em;
       text-transform: uppercase;
-      margin-bottom: 20px;
     }
     
     #credits {
+      text-align: center;
       font-size: 1em;
       color: #bbb;
     }
 
-    /* Gallery Section Styles */
-    /* Basic styles to prevent conflicts */
-    .gallery-section {
-      width: 100%;
-      min-height: 100vh;
-      overflow: hidden;
-      position: relative;
+    /* New Scrolling Gallery Styles */
+    /* Base styles */
+    :root {
+      --font-size-min: 16;
+      --font-size-max: 20;
+      --font-ratio-min: 1.2;
+      --font-ratio-max: 1.33;
+      --font-width-min: 375;
+      --font-width-max: 1500;
+      --container-width: 1600px;
+      --gap: clamp(10px, 7.35vw, 80px);
+      --gutter: 2rem;
+      --power-1-out: linear(
+        0 0%,
+        0.0027 3.64%,
+        0.0106 7.29%,
+        0.0425 14.58%,
+        0.0957 21.87%,
+        0.1701 29.16%,
+        0.2477 35.19%,
+        0.3401 41.23%,
+        0.5982 55.18%,
+        0.7044 61.56%,
+        0.7987 68.28%,
+        0.875 75%,
+        0.9297 81.25%,
+        0.9687 87.5%,
+        0.9922 93.75%,
+        1 100%
+      );
+      --power-2-out: linear(
+        0 0%,
+        0.0036 9.62%,
+        0.0185 16.66%,
+        0.0489 23.03%,
+        0.0962 28.86%,
+        0.1705 34.93%,
+        0.269 40.66%,
+        0.3867 45.89%,
+        0.5833 52.95%,
+        0.683 57.05%,
+        0.7829 62.14%,
+        0.8621 67.46%,
+        0.8991 70.68%,
+        0.9299 74.03%,
+        0.9545 77.52%,
+        0.9735 81.21%,
+        0.9865 85%,
+        0.9949 89.15%,
+        1 100%
+      );
+      --power-3-out: linear(
+        0 0%,
+        0.0029 13.8%,
+        0.0184 21.9%,
+        0.0339 25.51%,
+        0.0551 28.81%,
+        0.0827 31.88%,
+        0.1168 34.76%,
+        0.1962 39.57%,
+        0.3005 44.02%,
+        0.4084 47.53%,
+        0.6242 53.45%,
+        0.7493 57.93%,
+        0.8495 62.97%,
+        0.8888 65.67%,
+        0.9213 68.51%,
+        0.9629 73.9%,
+        0.9876 80.16%,
+        0.998 87.5%,
+        1 100%
+      );
+      --power-4-out: linear(
+        0 0%,
+        0.0012 14.95%,
+        0.0089 22.36%,
+        0.0297 28.43%,
+        0.0668 33.43%,
+        0.0979 36.08%,
+        0.1363 38.55%,
+        0.2373 43.07%,
+        0.3675 47.01%,
+        0.5984 52.15%,
+        0.7121 55.23%,
+        0.8192 59.21%,
+        0.898 63.62%,
+        0.9297 66.23%,
+        0.9546 69.06%,
+        0.9733 72.17%,
+        0.9864 75.67%,
+        0.9982 83.73%,
+        1 100%
+      );
+      --sine: linear(
+        0 0%,
+        0.2861 18.47%,
+        0.4829 32.08%,
+        0.6437 44.52%,
+        0.7712 56.07%,
+        0.8722 67.47%,
+        0.9115 73.02%,
+        0.9434 78.49%,
+        0.9682 83.91%,
+        0.9859 89.3%,
+        0.9965 94.66%,
+        1 100%
+      );
+    }
+
+    *,
+    *:after,
+    *:before {
+      box-sizing: border-box;
+    }
+
+    .ben-gallery-wrapper {
       display: none;
     }
 
-    .content-wrap {
-      width: 100%;
-      position: relative;
-      overflow: hidden;
+    .fluid {
+      --fluid-min: calc(
+        var(--font-size-min) * pow(var(--font-ratio-min), var(--font-level, 0))
+      );
+      --fluid-max: calc(
+        var(--font-size-max) * pow(var(--font-ratio-max), var(--font-level, 0))
+      );
+      --fluid-preferred: calc(
+        (var(--fluid-max) - var(--fluid-min)) /
+          (var(--font-width-max) - var(--font-width-min))
+      );
+      --fluid-type: clamp(
+        (var(--fluid-min) / 16) * 1rem,
+        ((var(--fluid-min) / 16) * 1rem) -
+          (((var(--fluid-preferred) * var(--font-width-min)) / 16) * 1rem) +
+          (var(--fluid-preferred) * var(--variable-unit, 100vi)),
+        (var(--fluid-max) / 16) * 1rem
+      );
+      font-size: var(--fluid-type);
     }
 
-    .fluid {
+    /* Gallery Specific Styles */
+    .content-wrap {
+      overflow: clip;
+      background: #0a0a0a;
+      z-index: 2;
+    }
+
+    .gallery-header {
+      min-height: 100vh;
+      display: grid;
+      margin: 0 auto;
+      align-content: center;
+      max-width: calc(100% - (2 * var(--gutter)));
+      padding-left: 48px;
+      text-align: left;
+    }
+
+    h1.fluid {
       --font-level: 8;
       line-height: 0.6;
-      font-size: clamp(2rem, 10vw, 8rem);
     }
 
-    /* Gallery Grid Styles */
-    .gallery-section header {
-      min-height: 50vh;
+    h2.fluid {
+      --font-level: 4;
+    }
+
+    main section {
+      min-height: 100vh;
+    }
+
+    main section:first-of-type {
+      min-height: 240vh;
+      view-timeline: --runner;
+    }
+
+    main section:last-of-type {
       display: grid;
       place-items: center;
-      text-align: center;
-      margin-bottom: 2rem;
     }
 
-    .gallery-content {
-      position: relative;
+    .content-gallery {
       min-height: 100vh;
-      width: 100%;
+      width: 100vw;
       display: flex;
       place-items: center;
       align-content: center;
+      position: sticky;
+      top: 0;
       overflow: hidden;
     }
 
-    .gallery-grid {
-      width: 90%;
-      max-width: 1600px;
+    /* Grid layout */
+    .grid {
+      --offset: 0;
+      width: 1600px;
+      max-width: calc(100% - (2 * var(--gutter)));
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       grid-template-rows: repeat(3, auto);
-      gap: clamp(10px, 5vw, 30px);
+      gap: var(--gap);
       margin: 0 auto;
-      position: relative;
+      align-content: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: -50% -50%;
     }
 
-    .layer {
+    @media (max-width: 600px) {
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+        --offset: -1;
+      }
+
+      .grid > div:nth-of-type(1) {
+        display: none;
+      }
+    }
+
+    .grid > .layer {
       display: grid;
       grid-column: 1 / -1;
       grid-row: 1 / -1;
       grid-template-columns: subgrid;
       grid-template-rows: subgrid;
-      opacity: 0;
-      transform: scale(0.8);
-      transition: opacity 0.8s ease, transform 0.8s ease;
     }
 
-    .gallery-grid img {
+    .grid > div:nth-of-type(1) div:nth-of-type(odd) {
+      grid-column: 1;
+    }
+    .grid > div:nth-of-type(1) div:nth-of-type(even) {
+      grid-column: -2;
+    }
+
+    .grid > div:nth-of-type(2) div:nth-of-type(odd) {
+      grid-column: calc(2 + var(--offset));
+    }
+    .grid > div:nth-of-type(2) div:nth-of-type(even) {
+      grid-column: calc(-3 - var(--offset));
+    }
+
+    .grid > div:nth-of-type(3) div {
+      grid-column: calc(3 + var(--offset));
+    }
+
+    .grid > div:nth-of-type(3) div:last-of-type {
+      grid-row: -1;
+    }
+
+    .grid .scaler {
+      position: relative;
+      grid-area: 2 / calc(3 + var(--offset));
+    }
+
+    .grid img {
       width: 100%;
       aspect-ratio: 4 / 5;
       object-fit: cover;
       border-radius: 1rem;
     }
 
-    /* Layer 1 positioning */
-    .layer:nth-of-type(1) div:nth-of-type(odd) {
-      grid-column: 1;
-    }
-    .layer:nth-of-type(1) div:nth-of-type(even) {
-      grid-column: 5;
-    }
-
-    /* Layer 2 positioning */
-    .layer:nth-of-type(2) div:nth-of-type(odd) {
-      grid-column: 2;
-    }
-    .layer:nth-of-type(2) div:nth-of-type(even) {
-      grid-column: 4;
-    }
-
-    /* Layer 3 positioning */
-    .layer:nth-of-type(3) div {
-      grid-column: 3;
-    }
-
-    /* Featured image */
     .scaler {
-      grid-area: 2 / 3;
       z-index: 2;
       width: 100%;
       height: 100%;
@@ -195,43 +357,84 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      height: auto;
+      translate: -50% -50%;
+      object-fit: cover;
       border-radius: 1rem;
-      transition: width 0.8s ease, height 0.8s ease;
+      width: 100%;
+      height: 100%;
     }
 
-    .gallery-section .end-section {
-      min-height: 50vh;
-      display: grid;
-      place-items: center;
+    /* Animation keyframes */
+    @keyframes fade {
+      0%, 55% {
+        opacity: 0;
+      }
+    }
+    
+    @keyframes reveal {
+      0%, 30% {
+        scale: 0;
+      }
+    }
+    
+    @keyframes scale-x {
+      0%, 10% {
+        width: calc(100vw - (2 * var(--gutter)));
+      }
+    }
+    
+    @keyframes scale-y {
+      0%, 10% {
+        height: calc(100vh - (2 * var(--gutter)));
+      }
     }
 
-    @media (max-width: 768px) {
-      .gallery-grid {
-        grid-template-columns: repeat(3, 1fr);
+    /* Animation support */
+    @media (prefers-reduced-motion: no-preference) {
+      html[data-enhanced="true"] .scaler img {
+        animation-name: scale-x, scale-y;
+        animation-fill-mode: both;
+        animation-timing-function: var(--power-2-out), var(--power-1-out);
+        animation-timeline: --runner, --runner;
+        animation-range: entry 100% exit -20%;
+      }
+
+      html[data-enhanced="true"] .grid .layer {
+        animation-name: fade, reveal;
+        animation-fill-mode: both;
+        animation-timeline: --runner, --runner;
+        animation-timing-function: var(--sine), var(--power-1-out);
+        animation-range: entry 100% exit 0%;
+      }
+
+      html[data-enhanced="true"] .grid .layer:nth-of-type(1) {
+        animation-timing-function: var(--sine), var(--power-1-out);
+        animation-range: entry 100% exit 0%;
       }
       
-      .layer:nth-of-type(1) {
-        display: none;
+      html[data-enhanced="true"] .grid .layer:nth-of-type(2) {
+        animation-timing-function: var(--sine), var(--power-3-out);
+        animation-range: entry 100% exit -10%;
       }
       
-      .layer:nth-of-type(2) div:nth-of-type(odd) {
-        grid-column: 1;
+      html[data-enhanced="true"] .grid .layer:nth-of-type(3) {
+        animation-timing-function: var(--sine), var(--power-4-out);
+        animation-range: entry 100% exit -20%;
       }
-      
-      .layer:nth-of-type(2) div:nth-of-type(even) {
-        grid-column: 3;
-      }
-      
-      .scaler {
-        grid-area: 2 / 2;
-      }
+    }
+
+    /* Footer styles */
+    .gallery-footer {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: #0a0a0a;
+      color: white;
+      width: 100%;
     }
   </style>
 </head>
 <body>
+  <!-- Loading Screen (Original) -->
   <div id="load">
     <div>G</div>
     <div>N</div>
@@ -242,217 +445,261 @@
     <div>L</div>
   </div>
 
+  <!-- Original Glitch Container -->
   <div id="glitch-container">
-    <div class="content" id="title">Ben Allison</div>
-    <div class="content" id="text">University of Kentucky Freshman Computer Science major.</div>
-    <div class="content" id="credits">Cybersecurity Portfolio</div>
+    <div class="content-original" id="title">Ben Allison</div>
+    <div class="content-original" id="text">University of Kentucky Freshman Computer Science major.</div>
+    <div class="content-original" id="credits">
+      <a href="#scroll-gallery" id="view-gallery">View My Project Gallery</a>
+    </div>
   </div>
 
-  <!-- Gallery Section - Initially Hidden -->
-  <div class="gallery-section" id="gallery-section">
-    <header>
-      <h1 class="fluid">projects.</h1>
-    </header>
-    
-    <section>
-      <div class="gallery-content">
-        <div class="gallery-grid">
-          <!-- Layer 1 -->
-          <div class="layer" id="layer-1">
-            <div>
-              <img src="/api/placeholder/400/500" alt="Project image" />
-            </div>
-            <div>
-              <img src="/api/placeholder/400/500" alt="Project image" />
-            </div>
-            <div>
-              <img src="/api/placeholder/400/500" alt="Project image" />
-            </div>
-            <div>
-              <img src="/api/placeholder/400/500" alt="Project image" />
+  <!-- New Gallery Section -->
+  <div class="ben-gallery-wrapper" id="scroll-gallery">
+    <div class="content-wrap">
+      <header class="gallery-header">
+        <h1 class="fluid">let's<br/>scroll.</h1>
+      </header>
+      <main>
+        <section>
+          <div class="content-gallery">
+            <div class="grid">
+              <div class="layer">
+                <div>
+                  <img src="/api/placeholder/400/500" alt="Cybersecurity concept" />
+                </div>
+                <div>
+                  <img src="/api/placeholder/400/500" alt="Code sample" />
+                </div>
+                <div>
+                  <img src="/api/placeholder/400/500" alt="Security analysis" />
+                </div>
+                <div>
+                  <img src="/api/placeholder/400/500" alt="Network diagram" />
+                </div>
+                <div>
+                  <img src="/api/placeholder/400/500" alt="Penetration testing" />
+                </div>
+                <div>
+                  <img src="/api/placeholder/400/500" alt="Security certificate" />
+                </div>
+              </div>
+              <div class="layer">
+                <div>
+                  <img src="/api/placeholder/400/500" alt="Digital forensics" />
+                </div>
+                <div>
+                  <img src="/api/placeholder/400/500" alt="Encryption concept" />
+                </div>
+                <div>
+                  <img src="/api/placeholder/400/500" alt="Firewall setup" />
+                </div>
+                <div>
+                  <img src="/api/placeholder/400/500" alt="Security monitoring" />
+                </div>
+                <div>
+                  <img src="/api/placeholder/400/500" alt="Vulnerability scan" />
+                </div>
+                <div>
+                  <img src="/api/placeholder/400/500" alt="Security conference" />
+                </div>
+              </div>
+              <div class="layer">
+                <div>
+                  <img src="/api/placeholder/400/500" alt="Security dashboard" />
+                </div>
+                <div>
+                  <img src="/api/placeholder/400/500" alt="Incident response" />
+                </div>
+              </div>
+              <div class="scaler">
+                <img src="/api/placeholder/800/1000" alt="Ben Allison cybersecurity specialist" />
+              </div>
             </div>
           </div>
-          
-          <!-- Layer 2 -->
-          <div class="layer" id="layer-2">
-            <div>
-              <img src="/api/placeholder/400/500" alt="Project image" />
-            </div>
-            <div>
-              <img src="/api/placeholder/400/500" alt="Project image" />
-            </div>
-            <div>
-              <img src="/api/placeholder/400/500" alt="Project image" />
-            </div>
-            <div>
-              <img src="/api/placeholder/400/500" alt="Project image" />
-            </div>
-          </div>
-          
-          <!-- Layer 3 -->
-          <div class="layer" id="layer-3">
-            <div>
-              <img src="/api/placeholder/400/500" alt="Project image" />
-            </div>
-            <div>
-              <img src="/api/placeholder/400/500" alt="Project image" />
-            </div>
-          </div>
-          
-          <!-- Featured Image -->
-          <div class="scaler" id="featured-image">
-            <img src="/api/placeholder/800/1000" alt="Featured project" />
-          </div>
-        </div>
+        </section>
+        <section>
+          <h2 class="fluid">my work.</h2>
+        </section>
+      </main>
+    </div>
+    <footer class="gallery-footer">
+      <span>© Ben Allison 2025 - Cybersecurity Portfolio</span>
+      <div>
+        <a href="#" id="back-to-top">Back to Top</a>
       </div>
-    </section>
-    
-    <section class="end-section">
-      <h2 class="fluid">more soon.</h2>
-    </section>
+    </footer>
   </div>
 
   <script>
-    // Use an IIFE to avoid global variables
+    // Create a self-executing scope to avoid global variables
     (function() {
-      // Original glitch functionality
-      const glitchSystem = {
-        // Initialize glitch system
-        init: function() {
-          document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-              document.getElementById("load").style.display = "none";
-              document.getElementById("glitch-container").style.display = "flex";
-              this.initGlitchEffects();
-              
-              // After a delay, initialize and show the gallery
-              setTimeout(() => {
-                gallerySystem.init();
-              }, 1000);
-            }, 2000);
-          });
-        },
-        
-        // Initialize glitch effects
-        initGlitchEffects: function() {
-          document.querySelectorAll("#glitch-container .content").forEach(selector => {
-            new Glitch(selector, 5, 600, 65, 5000).glitch();
-          });
-        }
+      // Original script functionality
+      const originalInit = function() {
+        setTimeout(function() {
+          document.getElementById("load").style.display = "none";
+          document.getElementById("glitch-container").style.display = "block";
+          initGlitchEffects();
+        }, 2000);
       };
-      
-      // Gallery system
-      const gallerySystem = {
-        // Initialize gallery
-        init: function() {
-          const gallerySection = document.getElementById("gallery-section");
-          gallerySection.style.display = "block";
-          
-          // Set up scroll detection 
-          this.setupScrollEffects();
-        },
-        
-        // Setup scroll effects
-        setupScrollEffects: function() {
-          const layers = document.querySelectorAll(".layer");
-          const scaler = document.querySelector(".scaler img");
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                // Animate layers when they come into view
-                layers.forEach((layer, index) => {
-                  setTimeout(() => {
-                    layer.style.opacity = "1";
-                    layer.style.transform = "scale(1)";
-                  }, index * 200);
-                });
-                
-                // Start featured image animation
-                scaler.style.width = "100%";
+
+      // Initialize glitch effects for original content
+      const initGlitchEffects = function() {
+        class Glitch {
+          constructor(selector, numberOfGlitchedLetter, timeGlitch, timePerLetter, timeBetweenGlitch) {
+            this.chars = "☺Σ×Π#-_¯—→↓↑←0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
+            this.selector = selector;
+            this.numberOfGlitchedLetter = numberOfGlitchedLetter;
+            this.innerText = selector.innerText;
+            this.charArray = this.innerText.split("");
+            this.charIndex = [];
+            this.timeGlitch = timeGlitch;
+            this.timeBetweenGlitch = timeBetweenGlitch;
+            this.timePerLetter = timePerLetter;
+            this.maxCount = Math.floor(this.timeGlitch / this.timePerLetter);
+            this.count = 0;
+            this.defineCharIndexToRandomize();
+          }
+
+          defineCharIndexToRandomize() {
+            this.charIndex = [];
+            for (let i = 0; i < this.numberOfGlitchedLetter; i++) {
+              let randCharIndex = Math.floor(Math.random() * this.charArray.length);
+              this.charIndex.push(randCharIndex);
+            }
+          }
+
+          randomize() {
+            let randomString = [...this.charArray];
+            this.charIndex.forEach(randCharIndex => {
+              if (randomString[randCharIndex] !== ' ') {
+                randomString[randCharIndex] = this.chars[Math.floor(Math.random() * this.chars.length)];
               }
             });
-          }, { threshold: 0.2 });
-          
-          // Observe the gallery section
-          observer.observe(document.querySelector(".gallery-content"));
-          
-          // Basic scroll effect
-          window.addEventListener("scroll", () => {
-            const scrollPosition = window.scrollY;
-            const windowHeight = window.innerHeight;
-            const galleryContent = document.querySelector(".gallery-content");
-            
-            if (galleryContent) {
-              const galleryTop = galleryContent.getBoundingClientRect().top + scrollPosition;
-              const scrollPercentage = Math.min(
-                Math.max((scrollPosition - galleryTop + windowHeight) / windowHeight, 0),
-                1
-              );
-              
-              // Add more detailed scroll animations here if needed
-              if (scrollPercentage > 0.1) {
-                layers.forEach((layer, index) => {
-                  layer.style.opacity = "1";
-                  layer.style.transform = "scale(1)";
-                });
-              }
-            }
-          });
-        }
-      };
-      
-      // Glitch class
-      class Glitch {
-        constructor(selector, numberOfGlitchedLetter, timeGlitch, timePerLetter, timeBetweenGlitch) {
-          this.chars = "☺Σ×Π#-_¯—→↓↑←0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
-          this.selector = selector;
-          this.numberOfGlitchedLetter = numberOfGlitchedLetter;
-          this.innerText = selector.innerText;
-          this.charArray = this.innerText.split("");
-          this.charIndex = [];
-          this.timeGlitch = timeGlitch;
-          this.timeBetweenGlitch = timeBetweenGlitch;
-          this.timePerLetter = timePerLetter;
-          this.maxCount = Math.floor(this.timeGlitch / this.timePerLetter);
-          this.count = 0;
-          this.defineCharIndexToRandomize();
-        }
+            this.selector.innerText = randomString.join("");
+          }
 
-        defineCharIndexToRandomize() {
-          this.charIndex = [];
-          for (let i = 0; i < this.numberOfGlitchedLetter; i++) {
-            let randCharIndex = Math.floor(Math.random() * this.charArray.length);
-            this.charIndex.push(randCharIndex);
+          glitch() {
+            const interval = setInterval(() => {
+              if (this.count >= this.maxCount) {
+                this.selector.innerText = this.innerText;
+                this.defineCharIndexToRandomize();
+                clearInterval(interval);
+                setTimeout(() => { this.count = 0; this.glitch(); }, this.timeBetweenGlitch);
+              } else {
+                this.randomize();
+                this.count++;
+              }
+            }, this.timePerLetter);
           }
         }
 
-        randomize() {
-          let randomString = [...this.charArray];
-          this.charIndex.forEach(randCharIndex => {
-            if (randomString[randCharIndex] !== ' ') {
-              randomString[randCharIndex] = this.chars[Math.floor(Math.random() * this.chars.length)];
-            }
-          });
-          this.selector.innerText = randomString.join("");
-        }
+        document.querySelectorAll("#glitch-container .content-original").forEach(selector => {
+          new Glitch(selector, 5, 600, 65, 5000).glitch();
+        });
+      };
 
-        glitch() {
-          const interval = setInterval(() => {
-            if (this.count >= this.maxCount) {
-              this.selector.innerText = this.innerText;
-              this.defineCharIndexToRandomize();
-              clearInterval(interval);
-              setTimeout(() => { this.count = 0; this.glitch(); }, this.timeBetweenGlitch);
-            } else {
-              this.randomize();
-              this.count++;
-            }
-          }, this.timePerLetter);
+      // Initialize scroll gallery
+      const initScrollGallery = function() {
+        // Set enhanced attribute for animations
+        document.documentElement.dataset.enhanced = "true";
+        
+        // Add event listener for the gallery link
+        const galleryLink = document.getElementById("view-gallery");
+        if (galleryLink) {
+          galleryLink.addEventListener("click", function(e) {
+            e.preventDefault();
+            document.getElementById("glitch-container").style.display = "none";
+            document.querySelector(".ben-gallery-wrapper").style.display = "block";
+          });
         }
-      }
-      
-      // Initialize the site
-      glitchSystem.init();
+        
+        // Add event listener for back to top
+        const backToTopLink = document.getElementById("back-to-top");
+        if (backToTopLink) {
+          backToTopLink.addEventListener("click", function(e) {
+            e.preventDefault();
+            document.querySelector(".ben-gallery-wrapper").style.display = "none";
+            document.getElementById("glitch-container").style.display = "block";
+          });
+        }
+      };
+
+      // Check if animation-timeline is supported
+      const hasScrollSupportCheck = function() {
+        return CSS.supports('(animation-timeline: scroll()) and (animation-range: 0 100%)');
+      };
+
+      // Use GSAP fallback if needed
+      const setupGsapFallback = function() {
+        if (!hasScrollSupportCheck() && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+          gsap.registerPlugin(ScrollTrigger);
+          
+          const scalerTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: 'main section:first-of-type',
+              start: 'top -10%',
+              end: 'bottom 80%',
+              scrub: true,
+            },
+          })
+          .from('.scaler img', {
+            height: window.innerHeight - 32,
+            ease: 'power1.inOut',
+          }, 0)
+          .from('.scaler img', {
+            width: window.innerWidth - 32,
+            ease: 'power2.inOut',
+          }, 0);
+          
+          const layersTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: 'main section:first-of-type',
+              start: 'top -40%',
+              end: 'bottom bottom',
+              scrub: true,
+            },
+          })
+          .from('.layer:nth-of-type(1)', {
+            opacity: 0,
+            ease: 'sine.out',
+          }, 0)
+          .from('.layer:nth-of-type(1)', {
+            scale: 0,
+            ease: 'power1.inOut',
+          }, 0)
+          .from('.layer:nth-of-type(2)', {
+            opacity: 0,
+            ease: 'sine.out',
+          }, 0)
+          .from('.layer:nth-of-type(2)', {
+            scale: 0,
+            ease: 'power3.inOut',
+          }, 0)
+          .from('.layer:nth-of-type(3)', {
+            opacity: 0,
+            ease: 'sine.out',
+          }, 0)
+          .from('.layer:nth-of-type(3)', {
+            scale: 0,
+            ease: 'power4.inOut',
+          }, 0);
+        }
+      };
+
+      // Initialize everything when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function() {
+        originalInit();  // Start with original loading animation
+        initScrollGallery();  // Set up the gallery navigation
+        
+        // Check for animation timeline support or load GSAP if needed
+        if (typeof gsap !== 'undefined') {
+          setupGsapFallback();
+        } else {
+          // If GSAP isn't available, we'll rely on CSS animations
+          console.log("Using native CSS scroll-driven animations");
+        }
+      });
     })();
   </script>
 </body>
