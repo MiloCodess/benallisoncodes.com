@@ -587,16 +587,39 @@
   
   <script>
     // Original glitch script from file 1
-    document.addEventListener("DOMContentLoaded", function() {
-      setTimeout(function() {
-        document.getElementById("load").style.display = "none";
-        document.getElementById("glitch-container").style.display = "block";
-        document.getElementById("navigation-section").style.display = "block";
-        initAllGlitch();
-        initParticles(); // Initialize particles for navigation
-        new NavigationPageManager(); // Initialize navigation
-      }, 2000);
-    });
+// Replace your current script section with this fixed version
+document.addEventListener("DOMContentLoaded", function() {
+  setTimeout(function() {
+    document.getElementById("load").style.display = "none";
+    document.getElementById("glitch-container").style.display = "block";
+    document.getElementById("navigation-section").style.display = "block";
+    
+    // Make sure all these functions exist before calling them
+    if (typeof initAllGlitch === 'function') {
+      initAllGlitch();
+    } else {
+      // Define the function inline if needed
+      initAllGlitch = function() {
+        document.querySelectorAll("#glitch-container .glitch-content").forEach(selector => {
+          new Glitch(selector, 5, 600, 65, 5000).glitch();
+        });
+      }
+      initAllGlitch();
+    }
+    
+    // Initialize particles if the function exists
+    if (typeof Particles !== 'undefined') {
+      initParticles();
+    }
+    
+    // Create navigation manager
+    try {
+      new NavigationPageManager();
+    } catch (e) {
+      console.error("Navigation manager error:", e);
+    }
+  }, 2000);
+});
 
     class Glitch {
       constructor(selector, numberOfGlitchedLetter, timeGlitch, timePerLetter, timeBetweenGlitch) {
