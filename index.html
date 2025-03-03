@@ -588,38 +588,60 @@
   <script>
     // Original glitch script from file 1
 // Replace your current script section with this fixed version
-document.addEventListener("DOMContentLoaded", function() {
-  setTimeout(function() {
-    document.getElementById("load").style.display = "none";
-    document.getElementById("glitch-container").style.display = "block";
-    document.getElementById("navigation-section").style.display = "block";
-    
-    // Make sure all these functions exist before calling them
-    if (typeof initAllGlitch === 'function') {
-      initAllGlitch();
-    } else {
-      // Define the function inline if needed
-      initAllGlitch = function() {
-        document.querySelectorAll("#glitch-container .glitch-content").forEach(selector => {
-          new Glitch(selector, 5, 600, 65, 5000).glitch();
-        });
-      }
-      initAllGlitch();
-    }
-    
-    // Initialize particles if the function exists
-    if (typeof Particles !== 'undefined') {
-      initParticles();
-    }
-    
-    // Create navigation manager
-    try {
-      new NavigationPageManager();
-    } catch (e) {
-      console.error("Navigation manager error:", e);
-    }
-  }, 2000);
-});
+window.onload = function() {
+  console.log("✅ Page fully loaded. Hiding loader...");
+  
+  // Get elements safely
+  let loadElement = document.getElementById("load");
+  let glitchContainer = document.getElementById("glitch-container");
+  let navigationSection = document.getElementById("navigation-section");
+
+  // Hide the loading screen
+  if (loadElement) {
+    loadElement.style.display = "none";
+  } else {
+    console.error("⚠️ Error: #load element not found.");
+  }
+
+  // Show glitch container
+  if (glitchContainer) {
+    glitchContainer.style.display = "block";
+  } else {
+    console.error("⚠️ Error: #glitch-container element not found.");
+  }
+
+  // Show navigation section
+  if (navigationSection) {
+    navigationSection.style.display = "block";
+  } else {
+    console.error("⚠️ Error: #navigation-section element not found.");
+  }
+
+  // Initialize Glitch effect safely
+  if (typeof initAllGlitch === 'function') {
+    console.log("✅ Initializing Glitch effect...");
+    initAllGlitch();
+  } else {
+    console.warn("⚠️ Warning: initAllGlitch function not found.");
+  }
+
+  // Initialize Particles.js safely
+  if (typeof Particles !== 'undefined') {
+    console.log("✅ Initializing Particles...");
+    initParticles();
+  } else {
+    console.warn("⚠️ Warning: Particles.js library is not loaded.");
+  }
+
+  // Initialize Navigation Manager safely
+  try {
+    console.log("✅ Initializing NavigationPageManager...");
+    new NavigationPageManager();
+  } catch (e) {
+    console.error("❌ Navigation Manager Error:", e);
+  }
+};
+
 
     class Glitch {
       constructor(selector, numberOfGlitchedLetter, timeGlitch, timePerLetter, timeBetweenGlitch) {
