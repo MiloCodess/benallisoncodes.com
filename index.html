@@ -4,7 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ben Allison | Cybersecurity Portfolio</title>
-  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Roboto:300,400,500" rel="stylesheet">
+  
+  <!-- Security Headers -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+  
+  <!-- Secure resource loading using HTTPS -->
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Roboto:300,400,500" rel="stylesheet" crossorigin="anonymous">
+  
   <style>
     /* Original styling from file 1 */
     body {
@@ -381,199 +392,217 @@
   <div id="glitch-container">
     <div class="glitch-content" id="glitch-title">Ben Allison</div>
     <div class="glitch-content" id="glitch-text">University of Kentucky Freshman Computer Science major.</div>
-    <div class="glitch-content" id="glitch-credits">Fill in later</div>
+    <div class="glitch-content" id="glitch-credits">Cybersecurity Portfolio</div>
   </div>
 
   <!-- Navigation page from file 2 (renamed classes to avoid conflicts) -->
   <div id="navigation-section" style="display: none;">
     <section class="nav-page">
-      <h1>FRONTEND TRENDS</h1>
+      <h1>CYBERSECURITY</h1>
       <h3 class="span-page loader-animation">
         <span class="m">B</span>
         <span class="m">E</span>
-        <span class="m">N</span>
-        <span class="m">E</span>
-        <span class="m">F</span>
-        <span class="m">I</span>
-        <span class="m">T</span>
         <span class="m">S</span>
-        <span class="m">&nbsp;</span>
-        <span class="m">o</span>
-        <span class="m">f</span>
-        <span class="m">&nbsp;</span>
         <span class="m">T</span>
-        <span class="m">E</span>
+        <span class="m">&nbsp;</span>
+        <span class="m">P</span>
+        <span class="m">R</span>
+        <span class="m">A</span>
         <span class="m">C</span>
-        <span class="m">H</span>
-        <span class="m">N</span>
-        <span class="m">O</span>
-        <span class="m">L</span>
-        <span class="m">O</span>
-        <span class="m">G</span>
+        <span class="m">T</span>
         <span class="m">I</span>
+        <span class="m">C</span>
         <span class="m">E</span>
         <span class="m">S</span>
+        <span class="m">&nbsp;</span>
+        <span class="m">2</span>
+        <span class="m">0</span>
+        <span class="m">2</span>
+        <span class="m">5</span>
       </h3>
       <div class="nav-container-page">
-        <a class="nav-tab-page" href="#tab-svelte">PWAs</a>
-        <a class="nav-tab-page" href="#tab-esbuild">Jamstack</a>
-        <a class="nav-tab-page" href="#tab-next">AI Tools</a>
-        <a class="nav-tab-page" href="#tab-typescript">TS Adoption</a>
-        <a class="nav-tab-page" href="#tab-vite">IoT</a>
+        <a class="nav-tab-page" href="#tab-web-sec">Web Security</a>
+        <a class="nav-tab-page" href="#tab-infra">Infrastructure</a>
+        <a class="nav-tab-page" href="#tab-ai-sec">AI Security</a>
+        <a class="nav-tab-page" href="#tab-crypto">Cryptography</a>
+        <a class="nav-tab-page" href="#tab-cloud">Cloud Security</a>
         <span class="nav-tab-slider-page"></span>
       </div>
     </section>
     
     <main class="main-content">
-      <section id="tab-svelte" class="slider-page">
-        <h1>PWA</h1>
-        <h2>run on multiple platforms and devices from a single codebase</h2>
+      <section id="tab-web-sec" class="slider-page">
+        <h1>WEB SECURITY</h1>
+        <h2>Protecting Modern Web Applications</h2>
         
         <div class="content-block">
-          <h3>Progressive Web Apps: The Future of Web Development</h3>
-          <p>Progressive Web Apps (PWAs) combine the best of web and mobile applications. Using modern web capabilities, they deliver an app-like experience to users, regardless of the browser or device they're using.</p>
+          <h3>Web Application Security Best Practices</h3>
+          <p>Modern web applications face numerous security challenges. Implementing these best practices is essential for maintaining a secure web presence.</p>
           
           <ul class="feature-list">
-            <li>Work offline or with low-quality network connections</li>
-            <li>Feel like native apps with app-like interactions and navigation</li>
-            <li>Always up-to-date thanks to service workers</li>
-            <li>Safe to use as they're served via HTTPS</li>
-            <li>Discoverable and installable directly from browsers</li>
+            <li>Implement strong Content Security Policy (CSP) headers</li>
+            <li>Use Subresource Integrity (SRI) for third-party resources</li>
+            <li>Enforce HTTPS with HSTS headers</li>
+            <li>Implement proper input validation and sanitization</li>
+            <li>Use parameterized queries to prevent SQL injection</li>
           </ul>
           
           <div class="code-example">
-            // Service Worker Registration Example<br>
-            if ('serviceWorker' in navigator) {<br>
-            &nbsp;&nbsp;window.addEventListener('load', () => {<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;navigator.serviceWorker.register('/sw.js')<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.then(reg => console.log('Service worker registered'))<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.catch(err => console.log('Service worker not registered', err));<br>
-            &nbsp;&nbsp;});<br>
-            }
-          </div>
-        </div>
-      </section>
-      
-      <section id="tab-esbuild" class="slider-page">
-        <h1>Jamstack</h1>
-        <h2>a modern web development architecture based on JavaScript, APIs, and Markup (JAM)</h2>
-        
-        <div class="content-block">
-          <h3>Why Jamstack Is Revolutionizing Web Development</h3>
-          <p>Jamstack is not just a technology stack but a new way of building websites and apps that delivers better performance, higher security, and a better developer experience—all at a lower cost.</p>
-          
-          <p>Core principles of Jamstack include:</p>
-          
-          <ul class="feature-list">
-            <li>Pre-rendered content served from CDNs for blazing fast page loads</li>
-            <li>Decoupling the frontend from backend services via APIs</li>
-            <li>Modern build tools and frameworks like Next.js, Gatsby, and Astro</li>
-            <li>Enhanced security with no server-side code to exploit</li>
-            <li>Simplified developer workflow with Git-based content management</li>
-          </ul>
-          
-          <div class="tech-grid">
-            <div class="tech-item">Next.js</div>
-            <div class="tech-item">Gatsby</div>
-            <div class="tech-item">Netlify</div>
-            <div class="tech-item">Vercel</div>
-            <div class="tech-item">Contentful</div>
-            <div class="tech-item">Sanity</div>
-          </div>
-        </div>
-      </section>
-      
-      <section id="tab-next" class="slider-page">
-        <h1>AI TOOLS</h1>
-        <h2>Transforming Web Development in 2024</h2>
-        
-        <div class="content-block">
-          <h3>AI-Powered Development Tools</h3>
-          <p>Artificial intelligence is reshaping how developers write code, design interfaces, and debug applications. These new AI-powered tools aren't just automating repetitive tasks—they're enhancing creativity and problem-solving.</p>
-          
-          <p>Popular AI tools in the web development ecosystem:</p>
-          
-          <ul class="feature-list">
-            <li>GitHub Copilot for intelligent code suggestions and generation</li>
-            <li>Figma's AI features for rapid UI design and prototyping</li>
-            <li>AI-powered CSS generators that create responsive layouts</li>
-            <li>Natural language interfaces for database queries</li>
-            <li>Automated testing frameworks with AI-based test creation</li>
-            <li>Code optimization tools that suggest performance improvements</li>
-          </ul>
-          
-          <p>The integration of AI into development workflows is estimated to increase developer productivity by up to 40%, while also making web development more accessible to beginners.</p>
-        </div>
-      </section>
-      
-      <section id="tab-typescript" class="slider-page">
-        <h1>TYPE SCRIPT</h1>
-        <h2>popularity has gone up a level</h2>
-        
-        <div class="content-block">
-          <h3>The TypeScript Revolution</h3>
-          <p>TypeScript continues its meteoric rise in popularity, becoming the standard choice for modern web development. What started as "JavaScript with types" has evolved into an essential tool for building robust, maintainable applications.</p>
-          
-          <p>Key factors driving TypeScript adoption:</p>
-          
-          <ul class="feature-list">
-            <li>Strong typing catches errors at compile time rather than runtime</li>
-            <li>Enhanced IDE support with better autocompletion and refactoring</li>
-            <li>Improved code documentation through explicit typing</li>
-            <li>Enterprise-level scalability for large codebases</li>
-            <li>Native support in major frameworks like Angular, React, and Vue</li>
-          </ul>
-          
-          <div class="code-example">
-            // TypeScript Example<br>
-            interface User {<br>
-            &nbsp;&nbsp;id: number;<br>
-            &nbsp;&nbsp;name: string;<br>
-            &nbsp;&nbsp;email: string;<br>
-            &nbsp;&nbsp;role: 'admin' | 'user' | 'guest';<br>
-            }<br><br>
-            
-            function getUserPermissions(user: User): string[] {<br>
-            &nbsp;&nbsp;switch(user.role) {<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;case 'admin':<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ['read', 'write', 'delete'];<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;case 'user':<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ['read', 'write'];<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;case 'guest':<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ['read'];<br>
+            // Example of a secure fetch implementation<br>
+            async function secureDataFetch(url, params) {<br>
+            &nbsp;&nbsp;try {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Set secure headers<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;const headers = new Headers({<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Content-Type': 'application/json',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'X-Requested-With': 'XMLHttpRequest'<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Always use HTTPS<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (!url.startsWith('https://')) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error('HTTPS required for all API calls');<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;const response = await fetch(url, {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method: 'POST',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;headers: headers,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;credentials: 'same-origin',<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body: JSON.stringify(params)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (!response.ok) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error(`HTTP error ${response.status}`);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return await response.json();<br>
+            &nbsp;&nbsp;} catch (error) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;console.error('Fetch error:', error);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Handle error appropriately<br>
             &nbsp;&nbsp;}<br>
             }
           </div>
         </div>
       </section>
       
-      <section id="tab-vite" class="slider-page">
-        <h1>IoT</h1>
-        <h2>weaving IoT into web development will lead to more connected and intelligent web applications</h2>
+      <section id="tab-infra" class="slider-page">
+        <h1>INFRASTRUCTURE</h1>
+        <h2>Securing systems from the ground up</h2>
         
         <div class="content-block">
-          <h3>Internet of Things & Web Development</h3>
-          <p>The Internet of Things (IoT) is creating new possibilities for web applications to interact with the physical world. Web developers are increasingly building interfaces that connect with smart devices, sensors, and other IoT infrastructure.</p>
+          <h3>Secure Infrastructure Architecture</h3>
+          <p>Infrastructure security requires a holistic approach that addresses all layers of the technology stack, from network to application.</p>
           
-          <p>Emerging trends in IoT web development:</p>
+          <p>Key infrastructure security principles:</p>
           
           <ul class="feature-list">
-            <li>WebBluetooth and WebUSB APIs enabling direct device connections</li>
-            <li>Real-time dashboards for monitoring IoT device networks</li>
-            <li>Progressive Web Apps that control smart home systems</li>
-            <li>WebRTC for peer-to-peer communication between browsers and devices</li>
-            <li>Edge computing integration for faster IoT data processing</li>
+            <li>Implement defense in depth with multiple security layers</li>
+            <li>Apply the principle of least privilege for all services</li>
+            <li>Segment networks to contain potential breaches</li>
+            <li>Use infrastructure as code (IaC) with security scanning</li>
+            <li>Automated patch management and vulnerability assessment</li>
           </ul>
           
-          <p>By 2025, it's estimated that over 75 billion IoT devices will be connected worldwide, creating immense opportunities for web developers to build new interfaces and applications that bridge the digital and physical worlds.</p>
+          <div class="tech-grid">
+            <div class="tech-item">Zero Trust</div>
+            <div class="tech-item">SIEM Systems</div>
+            <div class="tech-item">WAF</div>
+            <div class="tech-item">IDS/IPS</div>
+            <div class="tech-item">MFA</div>
+            <div class="tech-item">EDR</div>
+          </div>
+        </div>
+      </section>
+      
+      <section id="tab-ai-sec" class="slider-page">
+        <h1>AI SECURITY</h1>
+        <h2>Protecting AI Models and Systems</h2>
+        
+        <div class="content-block">
+          <h3>AI Security Challenges</h3>
+          <p>As AI becomes more integrated into critical systems, securing these technologies presents unique challenges that differ from traditional cybersecurity approaches.</p>
+          
+          <p>Critical AI security considerations:</p>
+          
+          <ul class="feature-list">
+            <li>Protecting against adversarial attacks on machine learning models</li>
+            <li>Implementing model monitoring to detect poisoning attempts</li>
+            <li>Securing the ML pipeline from data collection to deployment</li>
+            <li>Managing privacy concerns in AI training data</li>
+            <li>Ensuring model explainability for security verification</li>
+            <li>Preventing prompt injection attacks in LLM applications</li>
+          </ul>
+          
+          <p>The AI security landscape is evolving rapidly, with researchers developing new defenses against adversarial machine learning and model extraction attacks that could compromise intellectual property or enable system manipulation.</p>
+        </div>
+      </section>
+      
+      <section id="tab-crypto" class="slider-page">
+        <h1>CRYPTOGRAPHY</h1>
+        <h2>The foundation of digital security</h2>
+        
+        <div class="content-block">
+          <h3>Modern Cryptographic Best Practices</h3>
+          <p>Strong cryptography underlies almost every aspect of information security. Understanding and properly implementing cryptographic protocols is essential for securing data at rest and in transit.</p>
+          
+          <p>Critical cryptographic considerations:</p>
+          
+          <ul class="feature-list">
+            <li>Use strong, standardized algorithms (AES-256, RSA-2048+, ECC)</li>
+            <li>Implement forward secrecy in communications</li>
+            <li>Proper key management with secure generation and storage</li>
+            <li>Quantum-resistant algorithm preparation</li>
+            <li>Secure random number generation</li>
+          </ul>
+          
+          <div class="code-example">
+            // Example of secure password hashing with Argon2<br>
+            const argon2 = require('argon2');<br><br>
+            
+            async function hashPassword(password) {<br>
+            &nbsp;&nbsp;try {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// Generate a high-security password hash<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;const hash = await argon2.hash(password, {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: argon2.argon2id,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memoryCost: 65536, // 64 MiB<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timeCost: 3,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parallelism: 4<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return hash;<br>
+            &nbsp;&nbsp;} catch (error) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;console.error('Error hashing password:', error);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Password security process failed');<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </div>
+        </div>
+      </section>
+      
+      <section id="tab-cloud" class="slider-page">
+        <h1>CLOUD SECURITY</h1>
+        <h2>Protecting resources in distributed environments</h2>
+        
+        <div class="content-block">
+          <h3>Cloud Security Architecture</h3>
+          <p>Cloud environments require a different security approach compared to traditional on-premises infrastructure. The shared responsibility model means understanding where provider security ends and your responsibility begins.</p>
+          
+          <p>Essential cloud security practices:</p>
+          
+          <ul class="feature-list">
+            <li>Identity and Access Management (IAM) with least privilege</li>
+            <li>Data encryption both at rest and in transit</li>
+            <li>Network security groups and proper segmentation</li>
+            <li>Regular security posture assessments</li>
+            <li>Cloud Security Posture Management (CSPM) tools</li>
+          </ul>
+          
+          <p>The migration to cloud services has accelerated the need for DevSecOps practices that integrate security throughout the development lifecycle, with infrastructure-as-code scanning, automated compliance verification, and continuous monitoring being key components of a secure cloud strategy.</p>
           
           <div class="tech-grid">
-            <div class="tech-item">MQTT</div>
-            <div class="tech-item">WebSockets</div>
-            <div class="tech-item">Node-RED</div>
-            <div class="tech-item">Arduino</div>
-            <div class="tech-item">Raspberry Pi</div>
-            <div class="tech-item">AWS IoT</div>
+            <div class="tech-item">AWS Security Hub</div>
+            <div class="tech-item">Azure Sentinel</div>
+            <div class="tech-item">GCP Security Command Center</div>
+            <div class="tech-item">Terraform Security</div>
+            <div class="tech-item">Container Security</div>
+            <div class="tech-item">Serverless Security</div>
           </div>
         </div>
       </section>
@@ -581,415 +610,123 @@
     <canvas class="background-page"></canvas>
   </div>
 
-  <!-- Scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
+  <!-- Scripts with SRI for security -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" 
+          integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" 
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"
+          integrity="sha512-jq8sZI0I9Og0nnZ+CfJRnUzNSDKxr/5Bvha5bn7AHzTnRyxUfpUArMzfH++mwE/hb2efOo1gCAgI+1RMzf8F7g=="
+          crossorigin="anonymous"></script>
   
   <script>
-  // Fixed window.onload function with proper error handling
-window.onload = function() {
-  console.log("✅ Page fully loaded. Starting initialization sequence...");
-  
-  // Add a safety timeout in case something goes wrong
-  const safetyTimeout = setTimeout(() => {
-    console.warn("⚠️ Safety timeout triggered - forcing display of content");
-    forceDisplayContent();
-  }, 3000); // Force content display after 3 seconds if loading hangs
-  
-  // Initialize the page in the correct sequence
-  initializePage()
-    .then(() => {
-      console.log("✅ Page successfully initialized");
-      clearTimeout(safetyTimeout); // Clear the safety timeout if everything loaded properly
-    })
-    .catch(error => {
-      console.error("❌ Error during initialization:", error);
-      forceDisplayContent(); // Show content even if there was an error
-      clearTimeout(safetyTimeout);
-    });
-};
+  // Secure window.onload function with proper error handling
+  window.onload = function() {
+    console.log("✅ Page fully loaded. Starting initialization sequence...");
+    
+    // Add a safety timeout in case something goes wrong
+    const safetyTimeout = setTimeout(() => {
+      console.warn("⚠️ Safety timeout triggered - forcing display of content");
+      forceDisplayContent();
+    }, 3000); // Force content display after 3 seconds if loading hangs
+    
+    // Initialize the page in the correct sequence
+    initializePage()
+      .then(() => {
+        console.log("✅ Page successfully initialized");
+        clearTimeout(safetyTimeout); // Clear the safety timeout if everything loaded properly
+      })
+      .catch(error => {
+        console.error("❌ Error during initialization:", error);
+        forceDisplayContent(); // Show content even if there was an error
+        clearTimeout(safetyTimeout);
+      });
+  };
 
-// Function to force display content if loading gets stuck
-function forceDisplayContent() {
-  // Hide loader
-  const loadElement = document.getElementById("load");
-  if (loadElement) {
-    loadElement.style.display = "none";
-  }
-  
-  // Show main content containers
-  const glitchContainer = document.getElementById("glitch-container");
-  if (glitchContainer) {
-    glitchContainer.style.display = "block";
-  }
-  
-  const navigationSection = document.getElementById("navigation-section");
-  if (navigationSection) {
-    navigationSection.style.display = "block";
-  }
-}
-
-// Main initialization function that handles the sequence of initialization steps
-async function initializePage() {
-  // Step 1: Hide the loader
-  await hideLoader();
-  
-  // Step 2: Show the main content
-  await showContent();
-  
-  // Step 3: Initialize components with proper timing
-  await initializeComponents();
-}
-
-// Step 1: Hide the loader
-function hideLoader() {
-  return new Promise((resolve, reject) => {
-    const loadElement = document.getElementById("load");
-    if (loadElement) {
-      // Use a fade-out effect for smoother transition
-      loadElement.style.transition = "opacity 0.5s";
-      loadElement.style.opacity = "0";
-      
-      setTimeout(() => {
+  // Function to force display content if loading gets stuck
+  function forceDisplayContent() {
+    try {
+      // Hide loader
+      const loadElement = document.getElementById("load");
+      if (loadElement) {
         loadElement.style.display = "none";
-        resolve();
-      }, 500); // Match timing with the transition
-    } else {
-      console.warn("⚠️ Warning: Loader element not found");
-      resolve(); // Continue even if element is missing
-    }
-  });
-}
-
-// Step 2: Show the content
-function showContent() {
-  return new Promise((resolve) => {
-    // Show glitch container
-    const glitchContainer = document.getElementById("glitch-container");
-    if (glitchContainer) {
-      glitchContainer.style.display = "block";
-      glitchContainer.style.opacity = "0";
-      glitchContainer.style.transition = "opacity 0.5s";
+      }
       
-      setTimeout(() => {
-        glitchContainer.style.opacity = "1";
-      }, 50);
-    } else {
-      console.warn("⚠️ Warning: Glitch container element not found");
-    }
-    
-    // Show navigation section
-    const navigationSection = document.getElementById("navigation-section");
-    if (navigationSection) {
-      navigationSection.style.display = "block";
-      navigationSection.style.opacity = "0";
-      navigationSection.style.transition = "opacity 0.5s";
+      // Show main content containers
+      const glitchContainer = document.getElementById("glitch-container");
+      if (glitchContainer) {
+        glitchContainer.style.display = "block";
+      }
       
-      setTimeout(() => {
-        navigationSection.style.opacity = "1";
-      }, 50);
-    } else {
-      console.warn("⚠️ Warning: Navigation section element not found");
-    }
-    
-    // Allow a brief moment for the DOM to update before initializing components
-    setTimeout(resolve, 200);
-  });
-}
-
-// Step 3: Initialize all interactive components
-function initializeComponents() {
-  return new Promise((resolve) => {
-    // Initialize components with proper error handling
-    
-    // Initialize Glitch effect
-    try {
-      if (typeof initAllGlitch === 'function') {
-        console.log("✅ Initializing Glitch effect...");
-        initAllGlitch();
-      } else {
-        console.warn("⚠️ Warning: initAllGlitch function not found");
+      const navigationSection = document.getElementById("navigation-section");
+      if (navigationSection) {
+        navigationSection.style.display = "block";
       }
     } catch (error) {
-      console.error("❌ Error initializing Glitch effect:", error);
-    }
-    
-    // Initialize Particles
-    try {
-      if (typeof Particles !== 'undefined' && typeof initParticles === 'function') {
-        console.log("✅ Initializing Particles...");
-        initParticles();
-      } else {
-        console.warn("⚠️ Warning: Particles.js library or initParticles function not found");
-      }
-    } catch (error) {
-      console.error("❌ Error initializing Particles:", error);
-    }
-    
-    // Initialize Navigation Manager
-    try {
-      console.log("✅ Initializing NavigationPageManager...");
-      new NavigationPageManager();
-    } catch (error) {
-      console.error("❌ Error initializing Navigation Manager:", error);
-    }
-    
-    resolve();
-  });
-}
-
-// Make sure the Glitch class is properly defined
-class Glitch {
-  constructor(selector, numberOfGlitchedLetter, timeGlitch, timePerLetter, timeBetweenGlitch) {
-    this.chars = "☺Σ×Π#-_¯—→↓↑←0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
-    this.selector = selector;
-    this.numberOfGlitchedLetter = numberOfGlitchedLetter;
-    this.innerText = selector.innerText;
-    this.charArray = this.innerText.split("");
-    this.charIndex = [];
-    this.timeGlitch = timeGlitch;
-    this.timeBetweenGlitch = timeBetweenGlitch;
-    this.timePerLetter = timePerLetter;
-    this.maxCount = Math.floor(this.timeGlitch / this.timePerLetter);
-    this.count = 0;
-    this.defineCharIndexToRandomize();
-  }
-
-  defineCharIndexToRandomize() {
-    this.charIndex = [];
-    for (let i = 0; i < this.numberOfGlitchedLetter; i++) {
-      let randCharIndex = Math.floor(Math.random() * this.charArray.length);
-      this.charIndex.push(randCharIndex);
+      console.error("❌ Error in forceDisplayContent:", error);
     }
   }
 
-  randomize() {
-    let randomString = [...this.charArray];
-    this.charIndex.forEach(randCharIndex => {
-      if (randomString[randCharIndex] !== ' ') {
-        randomString[randCharIndex] = this.chars[Math.floor(Math.random() * this.chars.length)];
+  // Main initialization function that handles the sequence of initialization steps
+  async function initializePage() {
+    try {
+      // Step 1: Hide the loader
+      await hideLoader();
+      
+      // Step 2: Show the main content
+      await showContent();
+      
+      // Step 3: Initialize components with proper timing
+      await initializeComponents();
+    } catch (error) {
+      console.error("❌ Error in page initialization:", error);
+      throw error; // Re-throw to be caught by the main handler
+    }
+  }
+
+  // Step 1: Hide the loader
+  function hideLoader() {
+    return new Promise((resolve, reject) => {
+      try {
+        const loadElement = document.getElementById("load");
+        if (loadElement) {
+          // Use a fade-out effect for smoother transition
+          loadElement.style.transition = "opacity 0.5s";
+          loadElement.style.opacity = "0";
+          
+          setTimeout(() => {
+            loadElement.style.display = "none";
+            resolve();
+          }, 500); // Match timing with the transition
+        } else {
+          console.warn("⚠️ Warning: Loader element not found");
+          resolve(); // Continue even if element is missing
+        }
+      } catch (error) {
+        console.error("❌ Error hiding loader:", error);
+        resolve(); // Continue despite error
       }
     });
-    this.selector.innerText = randomString.join("");
   }
 
-  glitch() {
-    const interval = setInterval(() => {
-      if (this.count >= this.maxCount) {
-        this.selector.innerText = this.innerText;
-        this.defineCharIndexToRandomize();
-        clearInterval(interval);
-        setTimeout(() => { this.count = 0; this.glitch(); }, this.timeBetweenGlitch);
-      } else {
-        this.randomize();
-        this.count++;
-      }
-    }, this.timePerLetter);
-  }
-}
-
-// Improved initAllGlitch function with better error handling
-function initAllGlitch() {
-  const elements = document.querySelectorAll("#glitch-container .glitch-content");
-  if (elements.length === 0) {
-    console.warn("⚠️ Warning: No glitch content elements found to initialize");
-    return;
-  }
-  
-  elements.forEach(selector => {
-    try {
-      new Glitch(selector, 5, 600, 65, 5000).glitch();
-    } catch (error) {
-      console.error("❌ Error initializing glitch for element:", selector, error);
-    }
-  });
-}
-
-// Improved particles initialization
-function initParticles() {
-  if (typeof Particles !== 'undefined') {
-    try {
-      const canvas = document.querySelector(".background-page");
-      if (!canvas) {
-        console.warn("⚠️ Warning: Canvas element for particles not found");
-        return;
-      }
-      
-      const particles = Particles.init({
-        selector: ".background-page",
-        color: ["#03dac6", "#ff0266", "#000000"],
-        connectParticles: true,
-        responsive: [
-          {
-            breakpoint: 768,
-            options: {
-              color: ["#faebd7", "#03dac6", "#ff0266"],
-              maxParticles: 43,
-              connectParticles: false
-            }
-          }
-        ]
-      });
-      
-      console.log("✅ Particles initialized successfully");
-    } catch (error) {
-      console.error("❌ Error initializing particles:", error);
-    }
-  } else {
-    console.warn("⚠️ Warning: Particles.js library is not loaded");
-  }
-}
-
-
-    class Glitch {
-      constructor(selector, numberOfGlitchedLetter, timeGlitch, timePerLetter, timeBetweenGlitch) {
-        this.chars = "☺Σ×Π#-_¯—→↓↑←0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
-        this.selector = selector;
-        this.numberOfGlitchedLetter = numberOfGlitchedLetter;
-        this.innerText = selector.innerText;
-        this.charArray = this.innerText.split("");
-        this.charIndex = [];
-        this.timeGlitch = timeGlitch;
-        this.timeBetweenGlitch = timeBetweenGlitch;
-        this.timePerLetter = timePerLetter;
-        this.maxCount = Math.floor(this.timeGlitch / this.timePerLetter);
-        this.count = 0;
-        this.defineCharIndexToRandomize();
-      }
-
-      defineCharIndexToRandomize() {
-        this.charIndex = [];
-        for (let i = 0; i < this.numberOfGlitchedLetter; i++) {
-          let randCharIndex = Math.floor(Math.random() * this.charArray.length);
-          this.charIndex.push(randCharIndex);
-        }
-      }
-
-      randomize() {
-        let randomString = [...this.charArray];
-        this.charIndex.forEach(randCharIndex => {
-          if (randomString[randCharIndex] !== ' ') {
-            randomString[randCharIndex] = this.chars[Math.floor(Math.random() * this.chars.length)];
-          }
-        });
-        this.selector.innerText = randomString.join("");
-      }
-
-      glitch() {
-        const interval = setInterval(() => {
-          if (this.count >= this.maxCount) {
-            this.selector.innerText = this.innerText;
-            this.defineCharIndexToRandomize();
-            clearInterval(interval);
-            setTimeout(() => { this.count = 0; this.glitch(); }, this.timeBetweenGlitch);
-          } else {
-            this.randomize();
-            this.count++;
-          }
-        }, this.timePerLetter);
-      }
-    }
-
-    function initAllGlitch() {
-      document.querySelectorAll("#glitch-container .glitch-content").forEach(selector => {
-        new Glitch(selector, 5, 600, 65, 5000).glitch();
-      });
-    }
-
-    // Navigation page script from file 2 (renamed to avoid conflicts)
-    function initParticles() {
-      if (typeof Particles !== 'undefined') {
-        const particles = Particles.init({
-          selector: ".background-page",
-          color: ["#03dac6", "#ff0266", "#000000"],
-          connectParticles: true,
-          responsive: [
-            {
-              breakpoint: 768,
-              options: {
-                color: ["#faebd7", "#03dac6", "#ff0266"],
-                maxParticles: 43,
-                connectParticles: false
-              }
-            }
-          ]
-        });
-      }
-    }
-
-    class NavigationPageManager {
-      constructor() {
-        this.currentId = null;
-        this.currentTab = null;
-        this.tabContainerHeight = 70;
-        this.lastScroll = 0;
-        let self = this;
-        $(".nav-tab-page").click(function(event) {
-          self.onTabClick(event, $(this));
-        });
-        $(window).scroll(() => {
-          this.onScroll();
-        });
-        $(window).resize(() => {
-          this.onResize();
-        });
-      }
-
-      onTabClick(event, element) {
-        event.preventDefault();
-        let scrollTop =
-          $(element.attr("href")).offset().top - this.tabContainerHeight + 1;
-        $("html, body").animate({ scrollTop: scrollTop }, 600);
-      }
-
-      onScroll() {
-        this.checkHeaderPosition();
-        this.findCurrentTabSelector();
-        this.lastScroll = $(window).scrollTop();
-      }
-
-      onResize() {
-        if (this.currentId) {
-          this.setSliderCss();
-        }
-      }
-
-      checkHeaderPosition() {
-        const headerHeight = 75;
-        if ($(window).scrollTop() > headerHeight) {
-          $(".nav-container-page").addClass("nav-container-page--scrolled");
+  // Step 2: Show the content
+  function showContent() {
+    return new Promise((resolve) => {
+      try {
+        // Show glitch container
+        const glitchContainer = document.getElementById("glitch-container");
+        if (glitchContainer) {
+          glitchContainer.style.display = "block";
+          glitchContainer.style.opacity = "0";
+          glitchContainer.style.transition = "opacity 0.5s";
+          
+          setTimeout(() => {
+            glitchContainer.style.opacity = "1";
+          }, 50);
         } else {
-          $(".nav-container-page").removeClass("nav-container-page--scrolled");
+          console.warn("⚠️ Warning: Glitch container element not found");
         }
-        let offset =
-          $(".nav-page").offset().top +
-          $(".nav-page").height() -
-          this.tabContainerHeight -
-          headerHeight;
-        if (
-          $(window).scrollTop() > this.lastScroll &&
-          $(window).scrollTop() > offset
-        ) {
-          $(".nav-container-page").addClass("nav-container-page--move-up");
-          $(".nav-container-page").removeClass("nav-container-page--top-first");
-          $(".nav-container-page").addClass("nav-container-page--top-second");
-        } else if (
-          $(window).scrollTop() < this.lastScroll &&
-          $(window).scrollTop() > offset
-        ) {
-          $(".nav-container-page").removeClass("nav-container-page--move-up");
-          $(".nav-container-page").removeClass("nav-container-page--top-second");
-          $(".nav-container-page").addClass("nav-container-page--top-first");
-        } else {
-          $(".nav-container-page").removeClass("nav-container-page--move-up");
-          $(".nav-container-page").removeClass("nav-container-page--top-first");
-          $(".nav-container-page").removeClass("nav-container-page--top-second");
-        }
-      }
-
-      findCurrentTabSelector(element) {
-        let newCurrentId;
-        let newCurrentTab;
-        let self = this;
-        $(".nav-tab-page").each(function() {
-          let id = $(
+        
+        // Show navigation section
+        const navigationSection = document.getElementById("navigation-section");
+        if (navigationSection) {
+          navigationSection.style.display = "block";
