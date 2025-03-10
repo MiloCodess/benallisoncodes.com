@@ -4,22 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ben Allison | Cybersecurity Portfolio</title>
-  
-  <!-- Security Headers: Enforce content policies and resource restrictions -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;">
-  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
-  
-  <!-- Load external fonts securely -->
-  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Roboto:300,400,500" rel="stylesheet" crossorigin="anonymous">
-  
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Roboto:300,400,500" rel="stylesheet">
   <style>
-    /* ------------------------------- */
-    /* Basic styling for body */
-    /* ------------------------------- */
+    /* Original styling from file 1 */
     body {
       background: #0a0a0a;
       display: flex;
@@ -32,9 +19,7 @@
       font-family: "ROBOTO", sans-serif;
     }
 
-    /* ------------------------------- */
-    /* Loader styles */
-    /* ------------------------------- */
+    /* Loading Screen */
     #load {
       position: absolute;
       width: 600px;
@@ -47,19 +32,18 @@
       cursor: default;
       z-index: 1000;
     }
-    /* Each letter of the loader animates using the "move" keyframes.
-       The animation now runs exactly twice (2 iterations) */
+
     #load div {
       position: absolute;
       width: 20px;
       height: 36px;
       opacity: 0;
       font-family: Helvetica, Arial, sans-serif;
-      animation: move 2s linear 2;
+      animation: move 2s linear infinite;
       transform: rotate(180deg);
       color: #35C4F0;
     }
-    /* Different delays for each letter */
+
     #load div:nth-child(2) { animation-delay: 0.2s; }
     #load div:nth-child(3) { animation-delay: 0.4s; }
     #load div:nth-child(4) { animation-delay: 0.6s; }
@@ -67,57 +51,45 @@
     #load div:nth-child(6) { animation-delay: 1s; }
     #load div:nth-child(7) { animation-delay: 1.2s; }
 
-    /* Keyframes for the loader animation */
     @keyframes move {
-      0%   { left: 0; opacity: 0; }
-      35%  { left: 41%; transform: rotate(0deg); opacity: 1; }
-      65%  { left: 59%; transform: rotate(0deg); opacity: 1; }
+      0% { left: 0; opacity: 0; }
+      35% { left: 41%; transform: rotate(0deg); opacity: 1; }
+      65% { left: 59%; transform: rotate(0deg); opacity: 1; }
       100% { left: 100%; transform: rotate(-180deg); opacity: 0; }
     }
 
-    /* ------------------------------- */
-    /* Glitch container and content */
-    /* ------------------------------- */
+    /* Main Content */
     #glitch-container {
-      display: none; /* Hidden until loader is done */
+      display: none;
     }
+    
     .glitch-content {
       font-family: monospace;
       margin: auto;
       color: white;
       padding: 10%;
     }
+    
     #glitch-title {
       text-align: center;
       text-transform: uppercase;
       font-size: 4em;
       border-bottom: solid 1px white;
-      /* Glitch effect on the title: using a simple text-shadow animation */
-      animation: glitch 1s infinite;
     }
-    /* Keyframes for the glitch effect */
-    @keyframes glitch {
-      0%   { text-shadow: 2px 2px #ff0266; }
-      20%  { text-shadow: -2px -2px #03dac6; }
-      40%  { text-shadow: 2px -2px #ff0266; }
-      60%  { text-shadow: -2px 2px #03dac6; }
-      80%  { text-shadow: 2px 2px #ff0266; }
-      100% { text-shadow: -2px -2px #03dac6; }
-    }
+    
     #glitch-text {
       text-align: left;
       font-size: 1.25em;
       text-transform: uppercase;
     }
+    
     #glitch-credits {
       text-align: center;
       font-size: 1em;
       color: #bbb;
     }
 
-    /* ------------------------------- */
-    /* Navigation and main content styles */
-    /* ------------------------------- */
+    /* Navigation Page Styling from file 2 */
     .nav-page,
     .slider-page {
       display: flex;
@@ -130,6 +102,7 @@
       text-align: center;
       padding: 0 2em;
     }
+
     .nav-page h1,
     .slider-page h1 {
       font-family: "Josefin Sans", sans-serif;
@@ -141,10 +114,12 @@
       transition: all 0.3s ease;
       z-index: 3;
     }
+    
     .nav-page h1:hover {
       transform: translate3d(0, -10px, 22px);
       color: #ff0266;
     }
+
     .slider-page h2 {
       font-size: 2vw;
       letter-spacing: 0.3rem;
@@ -153,6 +128,7 @@
       color: #faebd7;
       z-index: 4;
     }
+    
     h3.span-page {
       font-size: 2vw;
       letter-spacing: 0.7em;
@@ -161,14 +137,17 @@
       color: #faebd7;
       z-index: 4;
     }
+    
     .span-page span:hover {
       color: #ff0266;
       font-weight: 500;
       font-size: 2.2vw;
     }
+
     a {
       text-decoration: none;
     }
+
     .nav-container-page {
       display: flex;
       flex-direction: row;
@@ -181,59 +160,213 @@
       z-index: 10;
       transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
     }
-    /* (Additional navigation styling omitted for brevity) */
 
-    /* ------------------------------- */
-    /* Background page styles */
-    /* ------------------------------- */
-    /* Change the canvas element to have an ID for particles.js */
+    .nav-container-page--top-first {
+      position: fixed;
+      top: 75px;
+      transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    .nav-container-page--top-second {
+      position: fixed;
+      top: 0;
+    }
+    
+    .nav-container-page--scrolled {
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    }
+    
+    .nav-container-page--move-up {
+      transform: translateY(-100%);
+    }
+    
+    .nav-tab-page {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      color: #03dac6;
+      letter-spacing: 0.1rem;
+      transition: all 0.5s ease;
+      font-size: 2vw;
+    }
+
+    .nav-tab-page:hover {
+      color: #1e1f26;
+      background: #03dac6;
+      transition: all 0.5s ease;
+    }
+
+    .nav-tab-slider-page {
+      position: absolute;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: #03dac6;
+      transition: left 0.3s ease;
+    }
+    
     .background-page {
       position: absolute;
       height: 100vh;
-      width: 100%; /* Ensure it covers full background */
       top: 0;
+      bottom: 0;
       left: 0;
+      right: 0;
       z-index: 0;
     }
-
-    /* ------------------------------- */
-    /* Responsive styling (media queries) */
-    /* ------------------------------- */
+    
     @media (min-width: 800px) {
       .nav-page h1,
       .slider-page h1 {
         font-size: 5vw;
       }
+
       .nav-page h2,
       .slider-page h2 {
         font-size: 3vw;
       }
+
       .nav-tab-page {
         font-size: 3vw;
       }
     }
+
     @media screen and (min-width: 360px) {
       .nav-page h1,
       .slider-page h1 {
         font-size: 8vw;
       }
+
       .nav-page h2,
       .slider-page h2 {
         font-size: 2vw;
         letter-spacing: 0.2vw;
       }
+
       .nav-tab-page {
         font-size: 1.2vw;
       }
     }
     
-    /* ------------------------------- */
-    /* (Remaining content styling omitted for brevity) */
-    /* ------------------------------- */
+    .loader-animation span {
+      color: #faebd7;
+      text-shadow: 0 0 0 #faebd7;
+      -webkit-animation: loading-effect 1s ease-in-out infinite alternate;
+    }
+
+    @-webkit-keyframes loading-effect {
+      to {
+        text-shadow: 20px 0 70px #ff0266;
+        color: #ff0266;
+      }
+    }
+    
+    .loader-animation span:nth-child(2) { -webkit-animation-delay: 0.1s; }
+    .loader-animation span:nth-child(3) { -webkit-animation-delay: 0.2s; }
+    .loader-animation span:nth-child(4) { -webkit-animation-delay: 0.3s; }
+    .loader-animation span:nth-child(5) { -webkit-animation-delay: 0.4s; }
+    .loader-animation span:nth-child(6) { -webkit-animation-delay: 0.5s; }
+    .loader-animation span:nth-child(7) { -webkit-animation-delay: 0.6s; }
+    .loader-animation span:nth-child(8) { -webkit-animation-delay: 0.7s; }
+    .loader-animation span:nth-child(9) { -webkit-animation-delay: 0.8s; }
+    .loader-animation span:nth-child(10) { -webkit-animation-delay: 0.9s; }
+    .loader-animation span:nth-child(11) { -webkit-animation-delay: 1s; }
+    .loader-animation span:nth-child(12) { -webkit-animation-delay: 1.1s; }
+    .loader-animation span:nth-child(13) { -webkit-animation-delay: 1.2s; }
+    .loader-animation span:nth-child(14) { -webkit-animation-delay: 1.3s; }
+    .loader-animation span:nth-child(15) { -webkit-animation-delay: 1.4s; }
+    .loader-animation span:nth-child(16) { -webkit-animation-delay: 1.5s; }
+    .loader-animation span:nth-child(17) { -webkit-animation-delay: 1.6s; }
+    .loader-animation span:nth-child(18) { -webkit-animation-delay: 1.7s; }
+    .loader-animation span:nth-child(19) { -webkit-animation-delay: 1.8s; }
+    .loader-animation span:nth-child(20) { -webkit-animation-delay: 1.9s; }
+    .loader-animation span:nth-child(21) { -webkit-animation-delay: 2s; }
+    .loader-animation span:nth-child(22) { -webkit-animation-delay: 2.1s; }
+    .loader-animation span:nth-child(23) { -webkit-animation-delay: 2.2s; }
+    .loader-animation span:nth-child(24) { -webkit-animation-delay: 2.3s; }
+    .loader-animation span:nth-child(25) { -webkit-animation-delay: 2.4s; }
+    
+    /* Fix for conflicting styles */
+    #navigation-section {
+      margin-top: 20px;
+      overflow-y: auto;
+    }
+    
+    .main-content {
+      width: 100%;
+    }
+    
+    /* Content styling for sections */
+    .content-block {
+      max-width: 800px;
+      margin: 30px auto;
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 25px;
+      border-radius: 8px;
+      text-align: left;
+      color: #faebd7;
+      font-size: 1.2vw;
+      line-height: 1.6;
+      z-index: 3;
+    }
+    
+    .content-block h3 {
+      color: #03dac6;
+      margin-bottom: 15px;
+      font-size: 1.8vw;
+    }
+    
+    .feature-list {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    
+    .feature-list li {
+      margin-bottom: 10px;
+      padding-left: 25px;
+      position: relative;
+    }
+    
+    .feature-list li:before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: #ff0266;
+    }
+    
+    .code-example {
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 15px;
+      border-radius: 5px;
+      font-family: monospace;
+      margin: 15px 0;
+      overflow-x: auto;
+    }
+    
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .tech-item {
+      background-color: rgba(3, 218, 198, 0.1);
+      padding: 15px;
+      border-radius: 5px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .tech-item:hover {
+      background-color: rgba(255, 2, 102, 0.2);
+      transform: translateY(-5px);
+    }
   </style>
 </head>
 <body>
-  <!-- Loader: Animated letters "G", "N", "I", "D", "A", "O", "L" -->
+  <!-- Loading animation from file 1 -->
   <div id="load">
     <div>G</div>
     <div>N</div>
@@ -244,186 +377,376 @@
     <div>L</div>
   </div>
 
-  <!-- Glitch Container: Contains the glitch-style content (glitch effect is applied via CSS) -->
+  <!-- Original glitch content from file 1 -->
   <div id="glitch-container">
     <div class="glitch-content" id="glitch-title">Ben Allison</div>
     <div class="glitch-content" id="glitch-text">University of Kentucky Freshman Computer Science major.</div>
-    <div class="glitch-content" id="glitch-credits">Cybersecurity Portfolio</div>
+    <div class="glitch-content" id="glitch-credits">Fill in later</div>
   </div>
 
-  <!-- Navigation Section: Initially hidden -->
+  <!-- Navigation page from file 2 (renamed classes to avoid conflicts) -->
   <div id="navigation-section" style="display: none;">
     <section class="nav-page">
-      <h1>CYBERSECURITY</h1>
+      <h1>FRONTEND TRENDS</h1>
       <h3 class="span-page loader-animation">
         <span class="m">B</span>
         <span class="m">E</span>
-        <span class="m">S</span>
-        <span class="m">T</span>
-        <span class="m">&nbsp;</span>
-        <span class="m">P</span>
-        <span class="m">R</span>
-        <span class="m">A</span>
-        <span class="m">C</span>
-        <span class="m">T</span>
+        <span class="m">N</span>
+        <span class="m">E</span>
+        <span class="m">F</span>
         <span class="m">I</span>
+        <span class="m">T</span>
+        <span class="m">S</span>
+        <span class="m">&nbsp;</span>
+        <span class="m">o</span>
+        <span class="m">f</span>
+        <span class="m">&nbsp;</span>
+        <span class="m">T</span>
+        <span class="m">E</span>
         <span class="m">C</span>
+        <span class="m">H</span>
+        <span class="m">N</span>
+        <span class="m">O</span>
+        <span class="m">L</span>
+        <span class="m">O</span>
+        <span class="m">G</span>
+        <span class="m">I</span>
         <span class="m">E</span>
         <span class="m">S</span>
-        <span class="m">&nbsp;</span>
-        <span class="m">2</span>
-        <span class="m">0</span>
-        <span class="m">2</span>
-        <span class="m">5</span>
       </h3>
       <div class="nav-container-page">
-        <a class="nav-tab-page" href="#tab-web-sec">Web Security</a>
-        <a class="nav-tab-page" href="#tab-infra">Infrastructure</a>
-        <a class="nav-tab-page" href="#tab-ai-sec">AI Security</a>
-        <a class="nav-tab-page" href="#tab-crypto">Cryptography</a>
-        <a class="nav-tab-page" href="#tab-cloud">Cloud Security</a>
+        <a class="nav-tab-page" href="#tab-svelte">PWAs</a>
+        <a class="nav-tab-page" href="#tab-esbuild">Jamstack</a>
+        <a class="nav-tab-page" href="#tab-next">AI Tools</a>
+        <a class="nav-tab-page" href="#tab-typescript">TS Adoption</a>
+        <a class="nav-tab-page" href="#tab-vite">IoT</a>
         <span class="nav-tab-slider-page"></span>
       </div>
     </section>
     
-    <!-- Main Content Sections (e.g., Web Security, Infrastructure, etc.) -->
     <main class="main-content">
-      <!-- Content sections go here (omitted for brevity) -->
-      <!-- ... -->
+      <section id="tab-svelte" class="slider-page">
+        <h1>PWA</h1>
+        <h2>run on multiple platforms and devices from a single codebase</h2>
+        
+        <div class="content-block">
+          <h3>Progressive Web Apps: The Future of Web Development</h3>
+          <p>Progressive Web Apps (PWAs) combine the best of web and mobile applications. Using modern web capabilities, they deliver an app-like experience to users, regardless of the browser or device they're using.</p>
+          
+          <ul class="feature-list">
+            <li>Work offline or with low-quality network connections</li>
+            <li>Feel like native apps with app-like interactions and navigation</li>
+            <li>Always up-to-date thanks to service workers</li>
+            <li>Safe to use as they're served via HTTPS</li>
+            <li>Discoverable and installable directly from browsers</li>
+          </ul>
+          
+          <div class="code-example">
+            // Service Worker Registration Example<br>
+            if ('serviceWorker' in navigator) {<br>
+            &nbsp;&nbsp;window.addEventListener('load', () => {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;navigator.serviceWorker.register('/sw.js')<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.then(reg => console.log('Service worker registered'))<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.catch(err => console.log('Service worker not registered', err));<br>
+            &nbsp;&nbsp;});<br>
+            }
+          </div>
+        </div>
+      </section>
+      
+      <section id="tab-esbuild" class="slider-page">
+        <h1>Jamstack</h1>
+        <h2>a modern web development architecture based on JavaScript, APIs, and Markup (JAM)</h2>
+        
+        <div class="content-block">
+          <h3>Why Jamstack Is Revolutionizing Web Development</h3>
+          <p>Jamstack is not just a technology stack but a new way of building websites and apps that delivers better performance, higher security, and a better developer experience—all at a lower cost.</p>
+          
+          <p>Core principles of Jamstack include:</p>
+          
+          <ul class="feature-list">
+            <li>Pre-rendered content served from CDNs for blazing fast page loads</li>
+            <li>Decoupling the frontend from backend services via APIs</li>
+            <li>Modern build tools and frameworks like Next.js, Gatsby, and Astro</li>
+            <li>Enhanced security with no server-side code to exploit</li>
+            <li>Simplified developer workflow with Git-based content management</li>
+          </ul>
+          
+          <div class="tech-grid">
+            <div class="tech-item">Next.js</div>
+            <div class="tech-item">Gatsby</div>
+            <div class="tech-item">Netlify</div>
+            <div class="tech-item">Vercel</div>
+            <div class="tech-item">Contentful</div>
+            <div class="tech-item">Sanity</div>
+          </div>
+        </div>
+      </section>
+      
+      <section id="tab-next" class="slider-page">
+        <h1>AI TOOLS</h1>
+        <h2>Transforming Web Development in 2024</h2>
+        
+        <div class="content-block">
+          <h3>AI-Powered Development Tools</h3>
+          <p>Artificial intelligence is reshaping how developers write code, design interfaces, and debug applications. These new AI-powered tools aren't just automating repetitive tasks—they're enhancing creativity and problem-solving.</p>
+          
+          <p>Popular AI tools in the web development ecosystem:</p>
+          
+          <ul class="feature-list">
+            <li>GitHub Copilot for intelligent code suggestions and generation</li>
+            <li>Figma's AI features for rapid UI design and prototyping</li>
+            <li>AI-powered CSS generators that create responsive layouts</li>
+            <li>Natural language interfaces for database queries</li>
+            <li>Automated testing frameworks with AI-based test creation</li>
+            <li>Code optimization tools that suggest performance improvements</li>
+          </ul>
+          
+          <p>The integration of AI into development workflows is estimated to increase developer productivity by up to 40%, while also making web development more accessible to beginners.</p>
+        </div>
+      </section>
+      
+      <section id="tab-typescript" class="slider-page">
+        <h1>TYPE SCRIPT</h1>
+        <h2>popularity has gone up a level</h2>
+        
+        <div class="content-block">
+          <h3>The TypeScript Revolution</h3>
+          <p>TypeScript continues its meteoric rise in popularity, becoming the standard choice for modern web development. What started as "JavaScript with types" has evolved into an essential tool for building robust, maintainable applications.</p>
+          
+          <p>Key factors driving TypeScript adoption:</p>
+          
+          <ul class="feature-list">
+            <li>Strong typing catches errors at compile time rather than runtime</li>
+            <li>Enhanced IDE support with better autocompletion and refactoring</li>
+            <li>Improved code documentation through explicit typing</li>
+            <li>Enterprise-level scalability for large codebases</li>
+            <li>Native support in major frameworks like Angular, React, and Vue</li>
+          </ul>
+          
+          <div class="code-example">
+            // TypeScript Example<br>
+            interface User {<br>
+            &nbsp;&nbsp;id: number;<br>
+            &nbsp;&nbsp;name: string;<br>
+            &nbsp;&nbsp;email: string;<br>
+            &nbsp;&nbsp;role: 'admin' | 'user' | 'guest';<br>
+            }<br><br>
+            
+            function getUserPermissions(user: User): string[] {<br>
+            &nbsp;&nbsp;switch(user.role) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;case 'admin':<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ['read', 'write', 'delete'];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;case 'user':<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ['read', 'write'];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;case 'guest':<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ['read'];<br>
+            &nbsp;&nbsp;}<br>
+            }
+          </div>
+        </div>
+      </section>
+      
+      <section id="tab-vite" class="slider-page">
+        <h1>IoT</h1>
+        <h2>weaving IoT into web development will lead to more connected and intelligent web applications</h2>
+        
+        <div class="content-block">
+          <h3>Internet of Things & Web Development</h3>
+          <p>The Internet of Things (IoT) is creating new possibilities for web applications to interact with the physical world. Web developers are increasingly building interfaces that connect with smart devices, sensors, and other IoT infrastructure.</p>
+          
+          <p>Emerging trends in IoT web development:</p>
+          
+          <ul class="feature-list">
+            <li>WebBluetooth and WebUSB APIs enabling direct device connections</li>
+            <li>Real-time dashboards for monitoring IoT device networks</li>
+            <li>Progressive Web Apps that control smart home systems</li>
+            <li>WebRTC for peer-to-peer communication between browsers and devices</li>
+            <li>Edge computing integration for faster IoT data processing</li>
+          </ul>
+          
+          <p>By 2025, it's estimated that over 75 billion IoT devices will be connected worldwide, creating immense opportunities for web developers to build new interfaces and applications that bridge the digital and physical worlds.</p>
+          
+          <div class="tech-grid">
+            <div class="tech-item">MQTT</div>
+            <div class="tech-item">WebSockets</div>
+            <div class="tech-item">Node-RED</div>
+            <div class="tech-item">Arduino</div>
+            <div class="tech-item">Raspberry Pi</div>
+            <div class="tech-item">AWS IoT</div>
+          </div>
+        </div>
+      </section>
     </main>
-    <!-- Canvas for background effect (particles.js) -->
-    <!-- Note: Added an id "particles-js" for the particles.js initialization -->
-    <canvas id="particles-js" class="background-page"></canvas>
+    <canvas class="background-page"></canvas>
   </div>
 
-  <!-- Include external scripts: jQuery and particles.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" 
-          integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" 
-          crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"
-          integrity="sha512-jq8sZI0I9Og0nnZ+CfJRnUzNSDKxr/5Bvha5bn7AHzTnRyxUfpUArMzfH++mwE/hb2efOo1gCAgI+1RMzf8F7g=="
-          crossorigin="anonymous"></script>
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
   
-  <!-- JavaScript to handle loader, reveal main content, and initialize background & glitch effects -->
   <script>
-    // When the window is fully loaded, start the loader process.
-    window.onload = function() {
-      console.log("✅ Page fully loaded. Running loader animation twice...");
-      
-      // Wait 6.5 seconds to allow the loader (which now runs exactly 2 times) to finish.
+    // Original glitch script from file 1
+    document.addEventListener("DOMContentLoaded", function() {
       setTimeout(function() {
-        // Hide the loader.
-        var loader = document.getElementById("load");
-        if (loader) {
-          loader.style.display = "none";
+        document.getElementById("load").style.display = "none";
+        document.getElementById("glitch-container").style.display = "block";
+        document.getElementById("navigation-section").style.display = "block";
+        initAllGlitch();
+        initParticles(); // Initialize particles for navigation
+        new NavigationPageManager(); // Initialize navigation
+      }, 2000);
+    });
+
+    class Glitch {
+      constructor(selector, numberOfGlitchedLetter, timeGlitch, timePerLetter, timeBetweenGlitch) {
+        this.chars = "☺Σ×Π#-_¯—→↓↑←0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
+        this.selector = selector;
+        this.numberOfGlitchedLetter = numberOfGlitchedLetter;
+        this.innerText = selector.innerText;
+        this.charArray = this.innerText.split("");
+        this.charIndex = [];
+        this.timeGlitch = timeGlitch;
+        this.timeBetweenGlitch = timeBetweenGlitch;
+        this.timePerLetter = timePerLetter;
+        this.maxCount = Math.floor(this.timeGlitch / this.timePerLetter);
+        this.count = 0;
+        this.defineCharIndexToRandomize();
+      }
+
+      defineCharIndexToRandomize() {
+        this.charIndex = [];
+        for (let i = 0; i < this.numberOfGlitchedLetter; i++) {
+          let randCharIndex = Math.floor(Math.random() * this.charArray.length);
+          this.charIndex.push(randCharIndex);
         }
-        
-        // Show the glitch container with a fade-in effect.
-        var glitchContainer = document.getElementById("glitch-container");
-        if (glitchContainer) {
-          glitchContainer.style.display = "block";
-          glitchContainer.style.opacity = "0";
-          glitchContainer.style.transition = "opacity 0.5s";
-          setTimeout(function() {
-            glitchContainer.style.opacity = "1";
-          }, 50);
-        }
-        
-        // Show the navigation section.
-        var navigationSection = document.getElementById("navigation-section");
-        if (navigationSection) {
-          navigationSection.style.display = "block";
-        }
-        
-        // Initialize particles.js background effect on the canvas.
-        particlesJS("particles-js", {
-          "particles": {
-            "number": {
-              "value": 80,
-              "density": {
-                "enable": true,
-                "value_area": 800
-              }
-            },
-            "color": {
-              "value": "#ffffff"
-            },
-            "shape": {
-              "type": "circle",
-              "stroke": {
-                "width": 0,
-                "color": "#000000"
-              },
-              "polygon": {
-                "nb_sides": 5
-              }
-            },
-            "opacity": {
-              "value": 0.5,
-              "random": false
-            },
-            "size": {
-              "value": 3,
-              "random": true
-            },
-            "line_linked": {
-              "enable": true,
-              "distance": 150,
-              "color": "#ffffff",
-              "opacity": 0.4,
-              "width": 1
-            },
-            "move": {
-              "enable": true,
-              "speed": 6,
-              "direction": "none",
-              "random": false,
-              "straight": false,
-              "out_mode": "out"
-            }
-          },
-          "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-              "onhover": {
-                "enable": true,
-                "mode": "repulse"
-              },
-              "onclick": {
-                "enable": true,
-                "mode": "push"
-              },
-              "resize": true
-            },
-            "modes": {
-              "grab": {
-                "distance": 400,
-                "line_linked": {
-                  "opacity": 1
-                }
-              },
-              "bubble": {
-                "distance": 400,
-                "size": 40,
-                "duration": 2,
-                "opacity": 8,
-                "speed": 3
-              },
-              "repulse": {
-                "distance": 200
-              },
-              "push": {
-                "particles_nb": 4
-              },
-              "remove": {
-                "particles_nb": 2
-              }
-            }
-          },
-          "retina_detect": true
+      }
+
+      randomize() {
+        let randomString = [...this.charArray];
+        this.charIndex.forEach(randCharIndex => {
+          if (randomString[randCharIndex] !== ' ') {
+            randomString[randCharIndex] = this.chars[Math.floor(Math.random() * this.chars.length)];
+          }
         });
-      }, 6500); // Delay in milliseconds (adjust if necessary)
-    };
-  </script>
-</body>
-</html>
+        this.selector.innerText = randomString.join("");
+      }
+
+      glitch() {
+        const interval = setInterval(() => {
+          if (this.count >= this.maxCount) {
+            this.selector.innerText = this.innerText;
+            this.defineCharIndexToRandomize();
+            clearInterval(interval);
+            setTimeout(() => { this.count = 0; this.glitch(); }, this.timeBetweenGlitch);
+          } else {
+            this.randomize();
+            this.count++;
+          }
+        }, this.timePerLetter);
+      }
+    }
+
+    function initAllGlitch() {
+      document.querySelectorAll("#glitch-container .glitch-content").forEach(selector => {
+        new Glitch(selector, 5, 600, 65, 5000).glitch();
+      });
+    }
+
+    // Navigation page script from file 2 (renamed to avoid conflicts)
+    function initParticles() {
+      if (typeof Particles !== 'undefined') {
+        const particles = Particles.init({
+          selector: ".background-page",
+          color: ["#03dac6", "#ff0266", "#000000"],
+          connectParticles: true,
+          responsive: [
+            {
+              breakpoint: 768,
+              options: {
+                color: ["#faebd7", "#03dac6", "#ff0266"],
+                maxParticles: 43,
+                connectParticles: false
+              }
+            }
+          ]
+        });
+      }
+    }
+
+    class NavigationPageManager {
+      constructor() {
+        this.currentId = null;
+        this.currentTab = null;
+        this.tabContainerHeight = 70;
+        this.lastScroll = 0;
+        let self = this;
+        $(".nav-tab-page").click(function(event) {
+          self.onTabClick(event, $(this));
+        });
+        $(window).scroll(() => {
+          this.onScroll();
+        });
+        $(window).resize(() => {
+          this.onResize();
+        });
+      }
+
+      onTabClick(event, element) {
+        event.preventDefault();
+        let scrollTop =
+          $(element.attr("href")).offset().top - this.tabContainerHeight + 1;
+        $("html, body").animate({ scrollTop: scrollTop }, 600);
+      }
+
+      onScroll() {
+        this.checkHeaderPosition();
+        this.findCurrentTabSelector();
+        this.lastScroll = $(window).scrollTop();
+      }
+
+      onResize() {
+        if (this.currentId) {
+          this.setSliderCss();
+        }
+      }
+
+      checkHeaderPosition() {
+        const headerHeight = 75;
+        if ($(window).scrollTop() > headerHeight) {
+          $(".nav-container-page").addClass("nav-container-page--scrolled");
+        } else {
+          $(".nav-container-page").removeClass("nav-container-page--scrolled");
+        }
+        let offset =
+          $(".nav-page").offset().top +
+          $(".nav-page").height() -
+          this.tabContainerHeight -
+          headerHeight;
+        if (
+          $(window).scrollTop() > this.lastScroll &&
+          $(window).scrollTop() > offset
+        ) {
+          $(".nav-container-page").addClass("nav-container-page--move-up");
+          $(".nav-container-page").removeClass("nav-container-page--top-first");
+          $(".nav-container-page").addClass("nav-container-page--top-second");
+        } else if (
+          $(window).scrollTop() < this.lastScroll &&
+          $(window).scrollTop() > offset
+        ) {
+          $(".nav-container-page").removeClass("nav-container-page--move-up");
+          $(".nav-container-page").removeClass("nav-container-page--top-second");
+          $(".nav-container-page").addClass("nav-container-page--top-first");
+        } else {
+          $(".nav-container-page").removeClass("nav-container-page--move-up");
+          $(".nav-container-page").removeClass("nav-container-page--top-first");
+          $(".nav-container-page").removeClass("nav-container-page--top-second");
+        }
+      }
+
+      findCurrentTabSelector(element) {
+        let newCurrentId;
+        let newCurrentTab;
+        let self = this;
+        $(".nav-tab-page").each(function() {
+          let id = $(
