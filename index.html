@@ -619,99 +619,158 @@
           crossorigin="anonymous"></script>
   
   <script>
-  // Secure window.onload function with proper error handling
-  window.onload = function() {
-    console.log("✅ Page fully loaded. Starting initialization sequence...");
-    
-    // Add a safety timeout in case something goes wrong
-    const safetyTimeout = setTimeout(() => {
-      console.warn("⚠️ Safety timeout triggered - forcing display of content");
-      forceDisplayContent();
-    }, 3000); // Force content display after 3 seconds if loading hangs
-    
-    // Initialize the page in the correct sequence
-    initializePage()
-      .then(() => {
-        console.log("✅ Page successfully initialized");
-        clearTimeout(safetyTimeout); // Clear the safety timeout if everything loaded properly
-      })
-      .catch(error => {
-        console.error("❌ Error during initialization:", error);
-        forceDisplayContent(); // Show content even if there was an error
-        clearTimeout(safetyTimeout);
-      });
-  };
+// Secure window.onload function with proper error handling
+window.onload = function() {
+  console.log("✅ Page fully loaded. Starting initialization sequence...");
+  
+  // Add a safety timeout in case something goes wrong
+  const safetyTimeout = setTimeout(() => {
+    console.warn("⚠️ Safety timeout triggered - forcing display of content");
+    forceDisplayContent();
+  }, 8000); // Extended timeout to accommodate two loading cycles
+  
+  // Initialize the page with two loading cycles
+  initializePageWithDoubleLoad()
+    .then(() => {
+      console.log("✅ Page successfully initialized after double load");
+      clearTimeout(safetyTimeout); // Clear the safety timeout if everything loaded properly
+    })
+    .catch(error => {
+      console.error("❌ Error during initialization:", error);
+      forceDisplayContent(); // Show content even if there was an error
+      clearTimeout(safetyTimeout);
+    });
+};
 
-  // Function to force display content if loading gets stuck
-  function forceDisplayContent() {
+// Function to force display content if loading gets stuck
+function forceDisplayContent() {
+  try {
+    // Hide loader
+    const loadElement = document.getElementById("load");
+    if (loadElement) {
+      loadElement.style.display = "none";
+    }
+    
+    // Show main content containers
+    const glitchContainer = document.getElementById("glitch-container");
+    if (glitchContainer) {
+      glitchContainer.style.display = "block";
+    }
+    
+    const navigationSection = document.getElementById("navigation-section");
+    if (navigationSection) {
+      navigationSection.style.display = "block";
+    }
+  } catch (error) {
+    console.error("❌ Error in forceDisplayContent:", error);
+  }
+}
+
+// Main initialization function that runs the loading animation twice
+async function initializePageWithDoubleLoad() {
+  try {
+    // First loading cycle
+    console.log("Starting first loading cycle...");
+    await runLoadingCycle();
+    
+    // Reset the loader for second cycle
+    await resetLoader();
+    
+    // Second loading cycle
+    console.log("Starting second loading cycle...");
+    await runLoadingCycle();
+    
+    // Show the content after both loading cycles
+    await showContent();
+    
+    // Initialize components with proper timing
+    await initializeComponents();
+  } catch (error) {
+    console.error("❌ Error in page initialization:", error);
+    throw error; // Re-throw to be caught by the main handler
+  }
+}
+
+// Run a single loading cycle
+function runLoadingCycle() {
+  return new Promise((resolve) => {
+    // Ensure loader is visible
+    const loadElement = document.getElementById("load");
+    if (loadElement) {
+      loadElement.style.display = "block";
+      loadElement.style.opacity = "1";
+      
+      // Let the animation run for a set time (2.5 seconds)
+      setTimeout(() => {
+        resolve();
+      }, 2500);
+    } else {
+      console.warn("⚠️ Warning: Loader element not found");
+      resolve();
+    }
+  });
+}
+
+// Reset the loader between cycles
+function resetLoader() {
+  return new Promise((resolve) => {
+    const loadElement = document.getElementById("load");
+    if (loadElement) {
+      // Temporarily hide the loader
+      loadElement.style.opacity = "0";
+      
+      // Refresh the animation state after a short pause
+      setTimeout(() => {
+        // Reset animation state for all divs
+        const divs = loadElement.querySelectorAll("div");
+        divs.forEach(div => {
+          // Force a reflow to reset animation
+          div.style.animation = 'none';
+          div.offsetHeight; // Trigger reflow
+          div.style.animation = null; // Reset to CSS defined animation
+        });
+        
+        // Make the loader visible again
+        loadElement.style.opacity = "1";
+        resolve();
+      }, 200);
+    } else {
+      resolve();
+    }
+  });
+}
+
+// Hide the loader
+function hideLoader() {
+  return new Promise((resolve) => {
     try {
-      // Hide loader
       const loadElement = document.getElementById("load");
       if (loadElement) {
-        loadElement.style.display = "none";
-      }
-      
-      // Show main content containers
-      const glitchContainer = document.getElementById("glitch-container");
-      if (glitchContainer) {
-        glitchContainer.style.display = "block";
-      }
-      
-      const navigationSection = document.getElementById("navigation-section");
-      if (navigationSection) {
-        navigationSection.style.display = "block";
+        // Use a fade-out effect for smoother transition
+        loadElement.style.transition = "opacity 0.5s";
+        loadElement.style.opacity = "0";
+        
+        setTimeout(() => {
+          loadElement.style.display = "none";
+          resolve();
+        }, 500); // Match timing with the transition
+      } else {
+        console.warn("⚠️ Warning: Loader element not found");
+        resolve(); // Continue even if element is missing
       }
     } catch (error) {
-      console.error("❌ Error in forceDisplayContent:", error);
+      console.error("❌ Error hiding loader:", error);
+      resolve(); // Continue despite error
     }
-  }
+  });
+}
 
-  // Main initialization function that handles the sequence of initialization steps
-  async function initializePage() {
+// Show the content
+function showContent() {
+  return new Promise((resolve) => {
     try {
-      // Step 1: Hide the loader
-      await hideLoader();
-      
-      // Step 2: Show the main content
-      await showContent();
-      
-      // Step 3: Initialize components with proper timing
-      await initializeComponents();
-    } catch (error) {
-      console.error("❌ Error in page initialization:", error);
-      throw error; // Re-throw to be caught by the main handler
-    }
-  }
-
-  // Step 1: Hide the loader
-  function hideLoader() {
-    return new Promise((resolve, reject) => {
-      try {
-        const loadElement = document.getElementById("load");
-        if (loadElement) {
-          // Use a fade-out effect for smoother transition
-          loadElement.style.transition = "opacity 0.5s";
-          loadElement.style.opacity = "0";
-          
-          setTimeout(() => {
-            loadElement.style.display = "none";
-            resolve();
-          }, 500); // Match timing with the transition
-        } else {
-          console.warn("⚠️ Warning: Loader element not found");
-          resolve(); // Continue even if element is missing
-        }
-      } catch (error) {
-        console.error("❌ Error hiding loader:", error);
-        resolve(); // Continue despite error
-      }
-    });
-  }
-
-  // Step 2: Show the content
-  function showContent() {
-    return new Promise((resolve) => {
-      try {
+      // Hide loader first
+      hideLoader().then(() => {
         // Show glitch container
         const glitchContainer = document.getElementById("glitch-container");
         if (glitchContainer) {
@@ -730,3 +789,23 @@
         const navigationSection = document.getElementById("navigation-section");
         if (navigationSection) {
           navigationSection.style.display = "block";
+          resolve();
+        } else {
+          console.warn("⚠️ Warning: Navigation section element not found");
+          resolve();
+        }
+      });
+    } catch (error) {
+      console.error("❌ Error showing content:", error);
+      resolve(); // Continue despite error
+    }
+  });
+}
+
+// Placeholder for additional component initialization
+function initializeComponents() {
+  return new Promise((resolve) => {
+    // Implement any additional component initialization here
+    resolve();
+  });
+}
