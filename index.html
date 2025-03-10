@@ -39,7 +39,8 @@
       height: 36px;
       opacity: 0;
       font-family: Helvetica, Arial, sans-serif;
-      animation: move 2s linear infinite;
+      /* Changed from infinite to 2 iterations */
+      animation: move 2s linear 2;
       transform: rotate(180deg);
       color: #35C4F0;
     }
@@ -588,6 +589,7 @@
   <script>
     // Original glitch script from file 1
     document.addEventListener("DOMContentLoaded", function() {
+      // Increased delay to 4000ms for 2 cycles of the loader (2s each)
       setTimeout(function() {
         document.getElementById("load").style.display = "none";
         document.getElementById("glitch-container").style.display = "block";
@@ -595,7 +597,7 @@
         initAllGlitch();
         initParticles(); // Initialize particles for navigation
         new NavigationPageManager(); // Initialize navigation
-      }, 2000);
+      }, 4000);
     });
 
     class Glitch {
@@ -749,4 +751,28 @@
         let newCurrentTab;
         let self = this;
         $(".nav-tab-page").each(function() {
-          let id = $(
+          let id = $(this).attr("href");
+          if ($(id).offset().top - self.tabContainerHeight <= $(window).scrollTop()) {
+            newCurrentId = id;
+            newCurrentTab = $(this);
+          }
+        });
+        if (this.currentId !== newCurrentId || this.currentTab !== newCurrentTab) {
+          this.currentId = newCurrentId;
+          this.currentTab = newCurrentTab;
+          this.setSliderCss();
+        }
+      }
+
+      setSliderCss() {
+        let width = this.currentTab.outerWidth();
+        let left = this.currentTab.position().left;
+        $(".nav-tab-slider-page").css({
+          width: width,
+          left: left
+        });
+      }
+    }
+  </script>
+</body>
+</html>
