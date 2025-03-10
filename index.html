@@ -44,13 +44,14 @@
       z-index: 1000;
     }
 
+    /* Changed animation iteration count to 2 instead of infinite */
     #load div {
       position: absolute;
       width: 20px;
       height: 36px;
       opacity: 0;
       font-family: Helvetica, Arial, sans-serif;
-      animation: move 2s linear 1;
+      animation: move 2s linear 2;
       transform: rotate(180deg);
       color: #35C4F0;
     }
@@ -619,188 +620,35 @@
           crossorigin="anonymous"></script>
   
   <script>
-<script>
-// Secure window.onload function with proper error handling
-window.onload = function() {
-  console.log("✅ Page fully loaded. Starting initialization sequence...");
-  
-  // Add a safety timeout in case something goes wrong
-  const safetyTimeout = setTimeout(() => {
-    console.warn("⚠️ Safety timeout triggered - forcing display of content");
-    forceDisplayContent();
-  }, 8000); // Extended timeout to accommodate two loading cycles
-  
-  // Initialize the page with two loading cycles
-  initializePageWithDoubleLoad()
-    .then(() => {
-      console.log("✅ Page successfully initialized after double load");
-      clearTimeout(safetyTimeout); // Clear the safety timeout if everything loaded properly
-    })
-    .catch(error => {
-      console.error("❌ Error during initialization:", error);
-      forceDisplayContent(); // Show content even if there was an error
-      clearTimeout(safetyTimeout);
-    });
-};
-
-// Function to force display content if loading gets stuck
-function forceDisplayContent() {
-  try {
-    // Hide loader
-    const loadElement = document.getElementById("load");
-    if (loadElement) {
-      loadElement.style.display = "none";
-    }
-    
-    // Show main content containers
-    const glitchContainer = document.getElementById("glitch-container");
-    if (glitchContainer) {
-      glitchContainer.style.display = "block";
-    }
-    
-    const navigationSection = document.getElementById("navigation-section");
-    if (navigationSection) {
-      navigationSection.style.display = "block";
-    }
-  } catch (error) {
-    console.error("❌ Error in forceDisplayContent:", error);
-  }
-}
-
-// Main initialization function that runs the loading animation twice
-async function initializePageWithDoubleLoad() {
-  try {
-    // First loading cycle
-    console.log("Starting first loading cycle...");
-    await runLoadingCycle();
-    
-    // Reset the loader for second cycle
-    await resetLoader();
-    
-    // Second loading cycle
-    console.log("Starting second loading cycle...");
-    await runLoadingCycle();
-    
-    // Show the content after both loading cycles
-    await showContent();
-    
-    // Initialize additional components if needed
-    await initializeComponents();
-  } catch (error) {
-    console.error("❌ Error in page initialization:", error);
-    throw error; // Re-throw to be caught by the main handler
-  }
-}
-
-// Run a single loading cycle (show loader for 2.5 seconds)
-function runLoadingCycle() {
-  return new Promise((resolve) => {
-    const loadElement = document.getElementById("load");
-    if (loadElement) {
-      loadElement.style.display = "block";
-      loadElement.style.opacity = "1";
-      
-      // Let the one-time animation run for 2.5 seconds
-      setTimeout(() => {
-        resolve();
-      }, 2500);
-    } else {
-      console.warn("⚠️ Warning: Loader element not found");
-      resolve();
-    }
-  });
-}
-
-// Reset the loader between cycles by re-triggering the animation
-function resetLoader() {
-  return new Promise((resolve) => {
-    const loadElement = document.getElementById("load");
-    if (loadElement) {
-      // Temporarily hide the loader
-      loadElement.style.opacity = "0";
-      
-      // Refresh the animation state after a short pause
-      setTimeout(() => {
-        // Reset animation state for all child divs
-        const divs = loadElement.querySelectorAll("div");
-        divs.forEach(div => {
-          // Remove the animation and force reflow, then reapply the one-time animation
-          div.style.animation = 'none';
-          div.offsetHeight; // Trigger reflow
-          div.style.animation = 'move 2s linear 1';
-        });
+    // Wait until the window has fully loaded
+    window.onload = function() {
+      console.log("✅ Page fully loaded. Running loader animation twice...");
+      // Wait 6.5 seconds for the two iterations (plus delays) to complete
+      setTimeout(function() {
+        // Hide the loader
+        var loader = document.getElementById("load");
+        if (loader) {
+          loader.style.display = "none";
+        }
         
-        // Make the loader visible again
-        loadElement.style.opacity = "1";
-        resolve();
-      }, 200);
-    } else {
-      resolve();
-    }
-  });
-}
-
-// Hide the loader with a fade-out effect
-function hideLoader() {
-  return new Promise((resolve) => {
-    try {
-      const loadElement = document.getElementById("load");
-      if (loadElement) {
-        loadElement.style.transition = "opacity 0.5s";
-        loadElement.style.opacity = "0";
+        // Show the glitch container with a fade-in effect
+        var glitchContainer = document.getElementById("glitch-container");
+        if (glitchContainer) {
+          glitchContainer.style.display = "block";
+          glitchContainer.style.opacity = "0";
+          glitchContainer.style.transition = "opacity 0.5s";
+          setTimeout(function() {
+            glitchContainer.style.opacity = "1";
+          }, 50);
+        }
         
-        setTimeout(() => {
-          loadElement.style.display = "none";
-          resolve();
-        }, 500);
-      } else {
-        console.warn("⚠️ Warning: Loader element not found");
-        resolve();
-      }
-    } catch (error) {
-      console.error("❌ Error hiding loader:", error);
-      resolve();
-    }
-  });
-}
-
-// Show the main content after loader cycles
-function showContent() {
-  return new Promise((resolve) => {
-    hideLoader().then(() => {
-      // Show glitch container
-      const glitchContainer = document.getElementById("glitch-container");
-      if (glitchContainer) {
-        glitchContainer.style.display = "block";
-        glitchContainer.style.opacity = "0";
-        glitchContainer.style.transition = "opacity 0.5s";
-        
-        setTimeout(() => {
-          glitchContainer.style.opacity = "1";
-        }, 50);
-      } else {
-        console.warn("⚠️ Warning: Glitch container element not found");
-      }
-      
-      // Show navigation section
-      const navigationSection = document.getElementById("navigation-section");
-      if (navigationSection) {
-        navigationSection.style.display = "block";
-        resolve();
-      } else {
-        console.warn("⚠️ Warning: Navigation section element not found");
-        resolve();
-      }
-    });
-  });
-}
-
-// Placeholder for additional component initialization if needed
-function initializeComponents() {
-  return new Promise((resolve) => {
-    // Implement any additional component initialization here
-    resolve();
-  });
-}
-</script>
-
+        // Show the navigation section
+        var navigationSection = document.getElementById("navigation-section");
+        if (navigationSection) {
+          navigationSection.style.display = "block";
+        }
+      }, 6500);
+    };
+  </script>
+</body>
+</html>
